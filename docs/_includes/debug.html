@@ -1,0 +1,7 @@
+<div class="jekylldebug"><h3>Jekyll debug</h3><ul>
+  <li>See ./docs/_includes/navbar-item.html for an example of how to use this.</li>
+  {% assign debug = debug | split: "," %}
+  {% for item in debug %}
+  <li>{{ item }}</li>
+  {% endfor %}
+</ul></div>

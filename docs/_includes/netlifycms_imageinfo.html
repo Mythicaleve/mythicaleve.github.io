@@ -1,0 +1,12 @@
+  - name: 'imageinfo'
+    create: true
+    label: 'Image Information'
+    folder: 'docs/jekyll_imageinfo/_posts/'
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Image title (for example "Falling new buildings")', name: 'title', widget: 'string' }
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'imageinfo' }
+      - { label: 'Image', name: 'image', widget: 'image' }
+      - { label: 'Caption for this image', name: 'caption', widget: 'string' }
+      - { label: 'Describe the image for the visually impaird (alt text)', name: 'alt', widget: 'string' }
+      - { label: 'Source and copyright information about the image', name: 'source', widget: 'string' }

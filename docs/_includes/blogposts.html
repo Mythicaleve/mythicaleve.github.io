@@ -1,0 +1,40 @@
+{% assign posts = site.categories.jekyll_blogposts %}
+{% assign all_tags = "" %}
+{% for post in posts %}
+  <div>
+    <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+    <p>{% if post.author %}{{ post.author }}, {% endif %}{{ post.date | date: "%Y-%m-%d" }}
+    {% if post.tags %}
+      {% assign tags = post.tags | uniq %}
+      {% assign tags_joined = tags | join: "," %}
+      {% assign all_tags = all_tags | append: "," | append: tags_joined %}
+      | {% for tag in tags %}{% include tag.html %}{% endfor %}
+    {% endif %}
+    </p>
+    <div class="clearfix blog-excerpt">
+    {% if post.img %}
+      {% assign image = post.img | first %}
+      {% include image.html %}
+    {% endif %}
+    <p class="blog-post-excerpt">{{ post.excerpt | strip_html }}</p>
+    </div>
+  </div>
+{% endfor %}
+{% if all_tags %}
+{% capture categories_widget %}
+<div class="card my-4">
+  <h5 class="card-header">Categories</h5>
+  <div class="card-body">
+    <ul class="list-unstyled mb-0 all-tags">
+      {% assign all_tags = all_tags | split: "," | uniq %}
+      {% for tag in all_tags %}
+      <li class="tag">{% include tag.html %}</li>
+      {% endfor %}
+      <li class="showing-tag hidden">
+        <a data-tag-id="none" class="recalc-tags show-all-tags" href="#">[show all]</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endcapture %}
+{% endif %}

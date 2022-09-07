@@ -1,0 +1,27 @@
+{% comment %}
+  Usage, for example to translate "home" to the French "accueil":
+
+  assign l="fr"
+  assign o="home"
+  include t.html
+
+  If you don't want a bunch of whitespace (for example for links), you can use:
+
+  capture target
+  assign l="fr"
+  assign o="home"
+  include t.html
+  endcapture
+  target|strip
+
+{% endcomment %}
+{% assign original = o %}
+{% assign target = l %}
+{% assign translated = original %}
+{% for translation in site.data.translations.translation_items %}
+  {% if translation.title == original %}
+    {% assign translated = translation[target] %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{{ translated }}

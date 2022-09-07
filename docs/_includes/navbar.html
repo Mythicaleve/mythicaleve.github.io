@@ -1,0 +1,7 @@
+<div class="collapse navbar-collapse" id="navbarResponsive">
+  <ul class="navbar-nav ml-auto">
+    {% for item in site.data.config.items[0].menu %}
+    {% include navbar-item.html %}
+    {% endfor %}
+  </ul>
+</div>

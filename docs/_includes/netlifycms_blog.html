@@ -1,0 +1,22 @@
+  - name: 'blog'
+    create: true
+    label: 'Blog posts'
+    folder: 'docs/jekyll_blogposts/_posts/'
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Author', name: 'author', widget: 'string', required: false }
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'blog' }
+      - { label: 'Path (for example /blog/my-blog-post/)', name: 'permalink', widget: 'string' }
+      - label: "Tags (for example programming, web design)"
+        name: "tags"
+        widget: "list"
+      - label: "Redirect From (for example /blog/my-blog-post/ ,/yet-another-path/)"
+        name: "redirect_from"
+        widget: "list"
+      - label: "Images"
+        name: "img"
+        widget: "list"
+        required: false
+        field: {label: Image, name: image, widget: image}
+      - { label: 'Content', name: 'body', widget: 'markdown' }

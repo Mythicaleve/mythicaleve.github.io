@@ -1,0 +1,28 @@
+color_palette:
+  dark_bg_fore: "#D9D9D9"
+  dark_bg_back: "#054062"
+api:
+  mapbox: pk.eyJ1IjoiZGN5Y2xlIiwiYSI6ImNrb2J3NGZzOTAxYnAycHFkbzkxbzlzZWYifQ.DdCrbOuTjU1z4Z-wi2NpNA
+  mapbox_desc: Dcycle Account Token, you should use your own here instead as this
+    will change
+items:
+  - title: My Cool Website
+    lang: en
+    langs:
+      - lang: fr
+        path: /jekyll/fr/
+    home: /jekyll/jekyll.html
+    menu:
+      - id: home
+        label: Home
+        href: /jekyll/jekyll.html
+  - title: Mon site web
+    home: /jekyll/fr/
+    lang: fr
+    langs:
+      - lang: en
+        path: /jekyll/jekyll.html
+    menu:
+      - id: home
+        label: Accueil
+        href: /jekyll/fr/

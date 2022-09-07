@@ -1,0 +1,251 @@
+
+locale: 'en'
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "_"
+backend:
+  # See https://www.netlifycms.org/docs/authentication-backends/#github-backend
+  name: github
+  repo: Mythicaleve/mythicaleve.github.io
+  branch: master
+  base_url: https://auth.static.dcycle.com
+  auth_endpoint: auth/github/alberto56
+media_folder: 'docs/media'
+public_folder: "/media"
+collections:
+  - name: "config"
+    label: "General configuration"
+    editor:
+      preview: false
+    files:
+      - label: "General configuration"
+        name: "config"
+        create: false
+        file: "docs/_data/config.yml"
+        fields:
+          - label: "Public API keys and public tokens (put no secrets here!)"
+            name: "api"
+            widget: object
+            fields:
+              - label: "Google Analytics description"
+                name: "googleanalytics_desc"
+                widget: string
+                required: false
+              - label: "Google Analytics token, for example G-XV3QMC5JPH"
+                name: "google_analytics_token"
+                widget: string
+                required: false
+              - label: "Mapbox account description"
+                name: "mapbox_desc"
+                widget: string
+                required: false
+              - label: "Mapbox public token"
+                name: "mapbox"
+                widget: string
+                required: false
+          - label: "Configuration"
+            name: "items"
+            widget: "list"
+            fields:
+              - label: "Title, for example My Website or Mon Site Web"
+                name: "title"
+                widget: "string"
+              - label: "language, for example 'en'"
+                name: "lang"
+                default: "en"
+              - label: "Other languages"
+                name: "langs"
+                widget: "list"
+                fields:
+                  - { label: 'language, for example "fr"', name: 'lang', widget: 'string', required: false }
+                  - { label: 'path, for example /some-other-language/index.html', name: 'path', widget: 'string', required: false }
+              - label: "Home page, for example / or /index.htl"
+                name: "home"
+                default: "/"
+              - label: "Menu items"
+                name: "menu"
+                widget: "list"
+                fields:
+                  - { label: 'label, for example "Home" or "Blog"', name: 'label', widget: 'string' }
+                  - { label: 'href, for example /blog/ or https://duckduckgo.com', name: 'href', widget: 'string' }
+      - label: "Translations"
+        name: "translations"
+        create: false
+        file: "docs/_data/translations.yml"
+        fields:
+          - label: "Translations"
+            name: "translation_items"
+            widget: "list"
+            fields:
+              - label: "Original string in English"
+                name: "title"
+                widget: "string"
+              - label: "String in French"
+                name: "fr"
+                required: false
+                widget: "string"
+              - label: "String in English"
+                required: false
+                name: "en"
+                widget: "string"
+
+  - name: 'pages'
+    create: true
+    label: 'Pages'
+    folder: 'docs/jekyll_pages/_posts/'
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - label: 'Layout'
+        name: 'layout'
+        widget: select
+        options:
+          - { label: "List of events", value: "eventlist" }
+          - { label: "List of blog posts", value: "bloglist" }
+          - { label: "Basic pages", value: "page" }
+      - label: 'Path (for example /privacy-policy/)'
+        name: 'permalink'
+        widget: 'string'
+        pattern: ['^\/[a-z-_0-9\/]*\/$', "Must start and end with a slash, and have only lower case letters, _, -, and numbers"]
+
+      - label: "Redirect From (for example /some-other-path/ ,/yet-another-path/)"
+        name: "redirect_from"
+        widget: "list"
+        pattern: ['^\/[a-z-_0-9\/]*\/$', "Must start and end with a slash, and have only lower case letters, _, -, and numbers"]
+
+      - label: "Images"
+        name: "img"
+        widget: "list"
+        required: false
+        field: {label: Image, name: image, widget: image}
+      - { label: 'Content', name: 'body', widget: 'markdown', required: false }
+
+  - name: 'events'
+    create: true
+    label: 'Events'
+    folder: 'docs/jekyll_events/_posts/'
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - label: "Online event"
+        hint: "Online events will appear in the site visitor's timezone, offline events will appear in the timezone of the event location."
+        name: online
+        widget: boolean
+        default: false
+        required: false
+      - label: "All day"
+        hint: "This event is taking place all day; do not display times."
+        name: allday
+        widget: boolean
+        default: false
+        required: false
+      - label: "Timezone of event (ignored for online events)"
+        name: timezone
+        widget: "select"
+        options:
+          # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          # Change to suit your needs
+          - Canada/Atlantic
+          - Canada/Central
+          - Canada/Eastern
+          - Canada/Mountain
+          - Canada/Newfoundland
+          - Canada/Pacific
+          - Canada/Saskatchewan
+          - Canada/Yukon
+        default: "Canada/Eastern"
+        required: false
+      - label: 'Dates and times'
+        hint: "If the event is offline and taking place in another timezone than your own, please enter the time in your own timezone. For example, if you are in Montreal and entering an online or offline event starting at 7pm in Vancouver, enter 10pm."
+        name: dates
+        widget: list
+        required: false
+        fields:
+          - label: 'Start date'
+            name: 'start'
+            widget: 'datetime'
+            default: ''
+            date_format: true
+            time_format: true
+            required: false
+          - label: 'End date'
+            name: 'end'
+            widget: 'datetime'
+            default: ''
+            date_format: true
+            time_format: true
+            required: false
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'event' }
+      - label: 'Path (for example /events/new-years-eve/)'
+        name: 'permalink'
+        widget: 'string'
+        pattern: ['^\/[a-z-_0-9\/]*\/$', "Must start and end with a slash, and have only lower case letters, _, -, and numbers"]
+
+      - label: "Redirect From (for example /new-year/ ,/yet-another-path/)"
+        name: "redirect_from"
+        widget: "list"
+      - label: "Images"
+        name: "img"
+        widget: "list"
+        required: false
+        field: {label: Image, name: image, widget: image}
+      - { label: 'Content', name: 'body', widget: 'markdown' }
+
+  - name: 'blog'
+    create: true
+    label: 'Blog posts'
+    folder: 'docs/jekyll_blogposts/_posts/'
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Author', name: 'author', widget: 'string', required: false }
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'blog' }
+      - { label: 'Path (for example /blog/my-blog-post/)', name: 'permalink', widget: 'string' }
+      - label: "Tags (for example programming, web design)"
+        name: "tags"
+        widget: "list"
+      - label: "Redirect From (for example /blog/my-blog-post/ ,/yet-another-path/)"
+        name: "redirect_from"
+        widget: "list"
+      - label: "Images"
+        name: "img"
+        widget: "list"
+        required: false
+        field: {label: Image, name: image, widget: image}
+      - { label: 'Content', name: 'body', widget: 'markdown' }
+
+  - name: 'locations'
+    create: true
+    label: 'Locations'
+    folder: 'docs/jekyll_locations/_posts/'
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - label: "Location"
+        hint: "please use https://www.latlong.net/convert-address-to-lat-long.html, multiple points will be a polygon"
+        name: "latlon"
+        widget: list
+        fields:
+          - label: "Lat, for example 51.500000"
+            name: "lat"
+            widget: string
+            required: false
+          - label: "Lon, for example -0.0900000"
+            name: "lon"
+            widget: string
+            required: false
+
+  - name: 'imageinfo'
+    create: true
+    label: 'Image Information'
+    folder: 'docs/jekyll_imageinfo/_posts/'
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 'Image title (for example "Falling new buildings")', name: 'title', widget: 'string' }
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'imageinfo' }
+      - { label: 'Image', name: 'image', widget: 'image' }
+      - { label: 'Caption for this image', name: 'caption', widget: 'string' }
+      - { label: 'Describe the image for the visually impaird (alt text)', name: 'alt', widget: 'string' }
+      - { label: 'Source and copyright information about the image', name: 'source', widget: 'string' }
+

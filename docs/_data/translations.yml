@@ -1,0 +1,15 @@
+translation_items:
+  - title: home
+    fr: accueil
+  - title: No events
+    fr: Aucun événement à afficher
+    en: No events to display
+  - title: Error loading events
+    fr: Erreur de chargement des événements
+    en: Error loading events
+  - title: Loading
+    fr: En téléchargement
+    en: Loading
+  - title: Your timezone is
+    fr: Votre fuseau horaire est
+    en: Your timezone is

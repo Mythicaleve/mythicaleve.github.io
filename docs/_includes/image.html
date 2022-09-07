@@ -1,0 +1,20 @@
+{% assign global_css = global_css | append: ",css_luminous" %}
+{% assign global_js = global_js | append: ",js_luminous" %}
+{% comment %}
+  The image variable is set to something like /media/xyz.jpg.
+  This might exist as an imageinfo which might contain alt text and other
+  information.
+{% endcomment %}
+{% assign all_images = site.categories.jekyll_imageinfo %}
+{% assign url = image %}
+{% for candidate in all_images %}
+  {% assign candidate_image = candidate.image | downcase %}
+  {% assign image = image | downcase %}
+  {% if candidate_image == image %}
+    {% assign alt = candidate.alt %}
+    {% assign caption = candidate.caption | append: " (" | append: candidate.source | append: ")"%}
+  {% endif %}
+{% endfor %}
+<a class="lightbox" href="{{ url }}">
+  <img src="{{ image }}"{% if alt %} alt="{{ alt }}"{% endif %}{% if caption %} data-caption="{{ caption }}"{% endif %}>
+</a>

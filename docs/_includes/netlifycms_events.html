@@ -1,0 +1,69 @@
+  - name: 'events'
+    create: true
+    label: 'Events'
+    folder: 'docs/jekyll_events/_posts/'
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - label: "Online event"
+        hint: "Online events will appear in the site visitor's timezone, offline events will appear in the timezone of the event location."
+        name: online
+        widget: boolean
+        default: false
+        required: false
+      - label: "All day"
+        hint: "This event is taking place all day; do not display times."
+        name: allday
+        widget: boolean
+        default: false
+        required: false
+      - label: "Timezone of event (ignored for online events)"
+        name: timezone
+        widget: "select"
+        options:
+          # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          # Change to suit your needs
+          - Canada/Atlantic
+          - Canada/Central
+          - Canada/Eastern
+          - Canada/Mountain
+          - Canada/Newfoundland
+          - Canada/Pacific
+          - Canada/Saskatchewan
+          - Canada/Yukon
+        default: "Canada/Eastern"
+        required: false
+      - label: 'Dates and times'
+        hint: "If the event is offline and taking place in another timezone than your own, please enter the time in your own timezone. For example, if you are in Montreal and entering an online or offline event starting at 7pm in Vancouver, enter 10pm."
+        name: dates
+        widget: list
+        required: false
+        fields:
+          - label: 'Start date'
+            name: 'start'
+            widget: 'datetime'
+            default: ''
+            date_format: true
+            time_format: true
+            required: false
+          - label: 'End date'
+            name: 'end'
+            widget: 'datetime'
+            default: ''
+            date_format: true
+            time_format: true
+            required: false
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'event' }
+      - label: 'Path (for example /events/new-years-eve/)'
+        name: 'permalink'
+        widget: 'string'
+        {% include netlifycms_validate_path.html %}
+      - label: "Redirect From (for example /new-year/ ,/yet-another-path/)"
+        name: "redirect_from"
+        widget: "list"
+      - label: "Images"
+        name: "img"
+        widget: "list"
+        required: false
+        field: {label: Image, name: image, widget: image}
+      - { label: 'Content', name: 'body', widget: 'markdown' }

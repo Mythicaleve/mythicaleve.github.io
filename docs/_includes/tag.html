@@ -1,0 +1,3 @@
+{% assign global_js = global_js | append: ",js_tag" %}
+{% assign tag_id = tag | remove: " " %}
+<a class="recalc-tags tag-selector tag-exists-{{ tag_id }}" data-tag-id="{{ tag_id }}" data-tag="{{ tag }}" href="#{{ tag_id }}">{{ tag }}</a>

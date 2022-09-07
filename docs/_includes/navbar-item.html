@@ -1,0 +1,11 @@
+{% assign active = false %}
+{% assign menu_item_length = item.href | size %}
+{% assign partial_page_url = page.url | slice: 0, menu_item_length %}
+{% if item.href == partial_page_url %}
+  {% assign active = true %}
+{% endif %}
+<li class="nav-item{% if active %} active{% endif %}">
+  <a class="nav-link" href="{{ item.href }}">{{ item.label }}{% if active %}
+    <span class="sr-only">(current)</span>
+{% endif %}</a>
+</li>

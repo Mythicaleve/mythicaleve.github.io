@@ -1,0 +1,4 @@
+{% assign global_js = global_js | split: "," | uniq %}
+{% for library in global_js %}
+{% include {{ library }}.html %}
+{% endfor %}

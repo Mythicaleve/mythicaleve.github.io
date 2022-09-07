@@ -1,0 +1,75 @@
+  - name: "config"
+    label: "General configuration"
+    editor:
+      preview: false
+    files:
+      - label: "General configuration"
+        name: "config"
+        create: false
+        file: "docs/_data/config.yml"
+        fields:
+          - label: "Public API keys and public tokens (put no secrets here!)"
+            name: "api"
+            widget: object
+            fields:
+              - label: "Google Analytics description"
+                name: "googleanalytics_desc"
+                widget: string
+                required: false
+              - label: "Google Analytics token, for example G-XV3QMC5JPH"
+                name: "google_analytics_token"
+                widget: string
+                required: false
+              - label: "Mapbox account description"
+                name: "mapbox_desc"
+                widget: string
+                required: false
+              - label: "Mapbox public token"
+                name: "mapbox"
+                widget: string
+                required: false
+          - label: "Configuration"
+            name: "items"
+            widget: "list"
+            fields:
+              - label: "Title, for example My Website or Mon Site Web"
+                name: "title"
+                widget: "string"
+              - label: "language, for example 'en'"
+                name: "lang"
+                default: "en"
+              - label: "Other languages"
+                name: "langs"
+                widget: "list"
+                fields:
+                  - { label: 'language, for example "fr"', name: 'lang', widget: 'string', required: false }
+                  - { label: 'path, for example /some-other-language/index.html', name: 'path', widget: 'string', required: false }
+              - label: "Home page, for example / or /index.htl"
+                name: "home"
+                default: "/"
+              - label: "Menu items"
+                name: "menu"
+                widget: "list"
+                fields:
+                  - { label: 'label, for example "Home" or "Blog"', name: 'label', widget: 'string' }
+                  - { label: 'href, for example /blog/ or https://duckduckgo.com', name: 'href', widget: 'string' }
+      - label: "Translations"
+        name: "translations"
+        create: false
+        file: "docs/_data/translations.yml"
+        fields:
+          - label: "Translations"
+            name: "translation_items"
+            widget: "list"
+            fields:
+              - label: "Original string in English"
+                name: "title"
+                widget: "string"
+              - label: "String in French"
+                name: "fr"
+                required: false
+                widget: "string"
+              - label: "String in English"
+                required: false
+                name: "en"
+                widget: "string"

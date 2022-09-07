@@ -1,0 +1,13 @@
+{% include init.html %}
+{% assign global_js = global_js | append: ",js_events" %}
+{% capture subtitlesection %}
+{% for date in page.dates %}
+  <div>
+    <span class="i-am-a-date-display-me-for-humans">{{ date.start }}</span>{% if date.end != "" %} - <span class="i-am-a-date-display-me-for-humans">{{ date.end }}</span>{% endif %}.<span class="space"> </span>
+  </div>
+  <div class="template-your-timezone-is">
+    <div>{% assign l=page.lang %}{% assign o="Your timezone is" %}{% include t.html %}<span class="your-timezone-is"></span></div>
+  </div>
+{% endfor %}
+{% endcapture %}
+{% include fullpage.html %}

@@ -1,0 +1,26 @@
+<script>
+function check_for_filtering_by_tag(hash = undefined) {
+  $(".showing-tag").hide();
+  $(".tag-selector").removeClass('selected');
+  $(".all-tags").removeClass('some-selected');
+  $(".recalc-tags").off().click(function(){
+    var tag = $(this).attr('data-tag-id');
+    check_for_filtering_by_tag(tag);
+  });
+  if (hash == undefined) {
+    var hash = window.location.hash.substr(1);
+  }
+  if (hash != "") {
+    if ($('.tag-exists-' + hash).length) {
+      $('.showing-tag').show();
+      $('.showing-tag .tag').html($('.tag-exists-' + hash).attr('data-tag'));
+      $(".all-tags").addClass('some-selected')
+      $('.tag-exists-' + hash).addClass('selected');
+    }
+  }
+}
+
+$(document).ready(function() {
+  check_for_filtering_by_tag();
+});
+</script>

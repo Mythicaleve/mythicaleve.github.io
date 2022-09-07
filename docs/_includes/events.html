@@ -1,0 +1,20 @@
+{% assign global_js = global_js | append: ",js_events" %}
+<div class="js-template-hidden">
+  <div class="template-your-timezone-is">
+    <div>{% assign l="fr" %}{% assign o="Your timezone is" %}{% include t.html %}<span class="your-timezone-is"></span></div>
+  </div>
+  <div class="template-no-events">
+    <h3>{% assign l="fr" %}{% assign o="No events" %}{% include t.html %}</h3>
+  </div>
+  <div class="template-error-loading-events">
+    <h3>{% assign l="fr" %}{% assign o="Error loading events" %}{% include t.html %}: <span class="events-error"></span></h3>
+  </div>
+  <div class="template-event">
+    <h3><a href="placeholder">placeholder</a> <span class="event-date"></span></h3>
+  </div>
+</div>
+<div class="events-to-display">
+  <div class="events-loading">
+    <h3>{% assign l="fr" %}{% assign o="Loading" %}{% include t.html %}...</h3>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+{% if page_img %}
+  <div class="image-gallery-wrapper clearfix">
+  {% for image in page_img %}
+    {% include image.html %}
+  {% endfor %}
+  </div>
+{% endif %}

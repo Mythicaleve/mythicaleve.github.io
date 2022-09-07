@@ -1,0 +1,8 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/luminous-lightbox/2.3.3/Luminous.min.js"></script>
+<script>
+new LuminousGallery(document.querySelectorAll('.lightbox'), {}, {
+  caption: function(trigger) {
+    return trigger.querySelector('img').getAttribute('data-caption');
+  }
+})
+</script>

@@ -1,0 +1,24 @@
+---
+---
+{% assign slug = "{{year}}-{{month}}-{{day}}-{{slug}}" %}
+locale: 'en'
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "_"
+backend:
+  # See https://www.netlifycms.org/docs/authentication-backends/#github-backend
+  name: github
+  repo: Mythicaleve/mythicaleve.github.io
+  branch: master
+  base_url: https://auth.static.dcycle.com
+  auth_endpoint: auth/github/alberto56
+media_folder: 'docs/media'
+public_folder: "/media"
+collections:
+{% include netlifycms_config.html %}
+{% include netlifycms_pages.html %}
+{% include netlifycms_events.html %}
+{% include netlifycms_blog.html %}
+{% include netlifycms_locations.html %}
+{% include netlifycms_imageinfo.html %}

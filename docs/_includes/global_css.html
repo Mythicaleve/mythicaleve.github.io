@@ -1,0 +1,4 @@
+{% assign global_css = global_css | split: "," | uniq %}
+{% for library in global_css %}
+{% include {{ library }}.html %}
+{% endfor %}
