@@ -1,0 +1,16 @@
+  - name: 'avail_for_sale'
+    create: true
+    label: 'Available for sale'
+    folder: 'docs/jekyll_pages/_availforsale/'
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Size', name: 'size', widget: 'string' }
+      - { label: 'Medium', name: 'medium', widget: 'string' }
+      - { label: 'Price', name: 'price', widget: 'string' }
+      - { label: 'Date', name: 'date', widget: 'string' }
+      - label: "Images"
+        name: "img"
+        widget: "list"
+        required: false
+        field: {label: Image, name: image, widget: image}
