@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://mythicaleve.com/xmlrpc.php">
+
+<title>Tanya ST Omelchuk Art &#8211; Watercolour Portrait and Illustration</title>
+<meta name='robots' content='max-image-preview:large' />
+<meta name="google-site-verification" content="google-site-verification=4y4xHmAVF4X0aPB68bVF--ZX7KLpRvB-qHi78YBGtio" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=967'
+					+ '&is_singular=';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9teXRoaWNhbGV2ZS5jb20%3D"
+		+ "&wpcomid=176465678"
+		+ "&time=1661910207";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='https://s0.wp.com' />
+<link rel='dns-prefetch' href='https://tanyaomelchuk.wordpress.com' />
+<link rel='dns-prefetch' href='https://wordpress.com' />
+<link rel='dns-prefetch' href='https://fonts.googleapis.com' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="Tanya ST Omelchuk Art &raquo; Feed" href="feed/index.rss" />
+<link rel="alternate" type="application/rss+xml" title="Tanya ST Omelchuk Art &raquo; Comments Feed" href="comments/feed/index.rss" />
+<link rel="alternate" type="application/rss+xml" title="Tanya ST Omelchuk Art &raquo; Portfolio Comments Feed" href="portfolio/feed/index.rss" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+	<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1652185836h&ver=6.0.2-alpha-53930"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link crossorigin='anonymous' rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJyNkd1OBCEMhV9IYGaNo14YnwWYBru2DKGwG95edtTNuP6sN01Oy3dywjHHpPwSC8RiuKpENWAUc0x+YSWMBO1CaS9yYzbYJxNqlw5y6JcM5jDe6kc9GFeRZuNo8a+K0GWbm5HSCM5GGD3VGcTsxTDMaIGA10Abkcg2yIogWN80Y7yO99tWf4F+D78m7WZQkj1Ftm2pRYWM80Xsf1tkWzAGuYL75QPb6fFBj0qQE4HKcNA7M6OU8wv1s9GmvlMBfc/Jfv+FP7D3np1LGURUn4yVVXnp4Fr7Mz+N0zTc303jMOzfAMmA1Z8=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>.has-text-align-justify {
+	text-align:justify;
+}
+.wp-block-cover__image-background.has-parallax {
+	background-size: cover;
+}
+</style>
+<style id='global-styles-inline-css'>body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--dark-blue: #293940;--wp--preset--color--medium-blue: #3c7993;--wp--preset--color--light-blue: #83b6cc;--wp--preset--color--dark-brown: #2d2a26;--wp--preset--color--dark-gray: #5d5d5d;--wp--preset--color--medium-gray: #a9a9a9;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--10: 0.3rem;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--spacing--90: 7.59rem;--wp--preset--spacing--100: 11.39rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;}body .is-layout-flow > .alignright{float: right;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-audio{margin: 0 0 1em 0;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-table > table{margin: 0 0 1em 0;}
+.wp-block-video{margin: 0 0 1em 0;}
+.wp-block-embed{margin: 0 0 1em 0;}
+.wp-block-image{margin: 0 0 1em 0;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+</style>
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/comment-likes/css/comment-likes.css,/i/noticons/noticons.css?m=1436783281j&amp;cssminify=yes' type='text/css' media='all' />
+<link crossorigin='anonymous' rel='stylesheet' id='screen-css-3-1' href='https://s0.wp.com/wp-content/themes/pub/pique/style.css?m=1661492133h&amp;cssminify=yes' type='text/css' media='screen' />
+<link rel='stylesheet' id='pique-fonts-css'  href='https://fonts.googleapis.com/css?family=Lora%3A400%2C700%2C400italic%2C700italic%7CKarla%3A400%2C700%2C400italic%2C700italic&amp;subset=latin%2Clatin-ext' media='all' />
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/_static/??-eJyFkN0KwjAMhV/ILszJwAvxUaSLWe3WP5uW4dvbFUFBmTfhHMKXnASWINC7RC5BupElhpAHCPqeCSQzJQZkhsF4nLkpcgdbyFgaXKuQC7G31FjtvjibRTBZaccwUQoS55eHEP01Y9LewUU7BEWOoi4c/5b/I61TOD0MiSWgt1tZFHlRDpV1/acRo5E6bqGRyotUkar+621X6GxPbd+3h+O+7brpCShwi84=?cssminify=yes' type='text/css' media='all' />
+<link crossorigin='anonymous' rel='stylesheet' id='print-css-7-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&amp;cssminify=yes' type='text/css' media='print' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-10-1' href='https://s0.wp.com/_static/??-eJxti8sKgCAQAH8oW6KXHaJvMTE1Vldapd+PDh2iTsPADJxJaIrZxAyhiITF+siQiLPYUPkD2KnDR/uw1swV/F9M2isUSJbe8pmyM8EwuA4s0qrwDpYwN0PfymmUstsvZXo34g==?cssminify=yes' type='text/css' media='all' />
+<script id='media-video-jwt-bridge-js-extra'>
+var videopressAjax = {"ajaxUrl":"https:\/\/tanyaomelchuk.wordpress.com\/wp-admin\/admin-ajax.php","bridgeUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/videopress\/js\/videopress-token-bridge.js","post_id":"967"};
+</script>
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"176465678","siteURL":"https:\/\/mythicaleve.com","xhrURL":"https:\/\/mythicaleve.com\/wp-admin\/admin-ajax.php","nonce":"bde021b84d","isLoggedIn":"","statusMessage":"","subsEmailDefault":"instantly","proxyScriptUrl":"https:\/\/s0.wp.com\/wp-content\/js\/wpcom-proxy-request.js?ver=20211021","shortlink":"https:\/\/wp.me\/PbWqMC-fB","i18n":{"followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJyFjUESwiAMRS9kimxQF45naUtkghAwQLW3tzp21JWrzM97yVe3DGPiilyVLyqmgQJCKyi9W3ZAfE6dLxv160mokCXd55URj6FZLE/orw1lfo8uEv+VIJKTvuK3vLbFBjk0R1zURBZTFiyvD58ENV2QYRCyDpf7UzxqY7Y7c9B67x8JiFQh'></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1661517705h&amp;cssminify=yes' type='text/css' media='all' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://tanyaomelchuk.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="index.html" />
+<link rel='shortlink' href='https://wp.me/PbWqMC-fB' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fmythicaleve.com%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fmythicaleve.com%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Tanya ST Omelchuk Art" />
+<meta property="og:description" content="Watercolour Portrait and Illustration" />
+<meta property="og:url" content="https://mythicaleve.com/" />
+<meta property="og:site_name" content="Tanya ST Omelchuk Art" />
+<meta property="og:image" content="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal.webp?w=975" />
+<meta property="og:image:width" content="975" />
+<meta property="og:image:height" content="1200" />
+<meta property="og:image:alt" content="" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+<meta name="twitter:text:title" content="Portfolio" />
+<meta name="twitter:image" content="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal.webp?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="search" type="application/opensearchdescription+xml" href="osd.xml" title="Tanya ST Omelchuk Art" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#877777" />
+	<style type="text/css">
+		</style>
+	<meta name="application-name" content="Tanya ST Omelchuk Art" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Watercolour Portrait and Illustration" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://mythicaleve.com/feed/;icon-uri=https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-7908e9fe-55b9-492f-8fcd-80ba05e95bc8.png?w=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="This is a portfolio page featuring artwork from Montreal based watercolour portrait artist Tanya ST Omelchuk" />
+<style type="text/css" id="custom-background-css">body.custom-background { background-color: #877777; background-image: url("https://tanyaomelchuk.files.wordpress.com/2022/06/6cd480d6-7b75-4e1c-ae0a-c1400e0bbf10.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+	<style type="text/css" id="custom-colors-css">body,
+		input[type="text"]:focus,
+		input[type="email"]:focus,
+		input[type="url"]:focus,
+		input[type="password"]:focus,
+		input[type="search"]:focus,
+		textarea:focus,
+		.widget_price_filter .ui-slider .ui-slider-handle { background-color: #877777;}
+button, .archive .read-more a, .blog .read-more a, .search-results .read-more a, .button, input[type="button"], input[type="reset"], input[type="submit"], .site-header-cart .woocommerce.widget_shopping_cart .product_list_widget li a, ul.products li.product .added_to_cart, .woocommerce-tabs ul.tabs li:not(.active) a, .demo_store, .demo_store a, .site-header-cart .woocommerce.widget_shopping_cart .woocommerce-mini-cart__buttons a, .woocommerce.widget_shopping_cart .woocommerce-mini-cart__buttons a { color: #312A2A;}
+.woocommerce-tabs ul.tabs li.active { border-bottom-color: #877777;}
+.pique-panel:nth-of-type(even),
+		#masthead,
+		.overlay,
+		.widget_price_filter .ui-slider .ui-slider-range { background-color: #000000;}
+.main-navigation { background-color: #000000;}
+.main-navigation { border-color: #000000;}
+.main-navigation ul ul { background-color: #000000;}
+.main-navigation ul ul::before { border-bottom-color: #000000;}
+.main-navigation ul ul ul::before { border-right-color: #000000;}
+.widget ul a,
+			.woocommerce.widget .amount,
+			.woocommerce.widget .reviewer,
+			.woocommerce.widget .total,
+			.woocommerce.widget .quantity,
+			.woocommerce.widget li del { color: #000000;}
+.widget.widget_wpcom_social_media_icons_widget ul a, .widget.jetpack_widget_social_icons ul a,
+					.secondary-links li a[href*="wordpress.org"]::before, .secondary-links li a[href*="facebook.com"]::before, .secondary-links li a[href*="twitter.com"]::before, .secondary-links li a[href*="dribbble.com"]::before, .secondary-links li a[href*="plus.google.com"]::before, .secondary-links li a[href*="pinterest.com"]::before, .secondary-links li a[href*="github.com"]::before, .secondary-links li a[href*="tumblr.com"]::before, .secondary-links li a[href*="youtube.com"]::before, .secondary-links li a[href*="flickr.com"]::before, .secondary-links li a[href*="vimeo.com"]::before, .secondary-links li a[href*="instagram.com"]::before, .secondary-links li a[href*="codepen.io"]::before, .secondary-links li a[href*="linkedin.com"]::before, .secondary-links li a[href*="foursquare.com"]::before, .secondary-links li a[href*="reddit.com"]::before, .secondary-links li a[href*="digg.com"]::before, .secondary-links li a[href*="getpocket.com"]::before, .secondary-links li a[href*="path.com"]::before, .secondary-links li a[href*="stumbleupon.com"]::before, .secondary-links li a[href*="spotify.com"]::before, .secondary-links li a[href*="twitch.tv"]::before, .secondary-links li a[href*="dropbox.com"]::before, .secondary-links li a[href*="/feed"]::before, .secondary-links li a[href*="skype"]::before, .secondary-links li a[href*="mailto"]::before { background-color: #000000;}
+.widget.widget_wpcom_social_media_icons_widget ul a:hover, .widget.jetpack_widget_social_icons ul a:hover,
+					.secondary-links li a[href*="wordpress.org"]:hover::before, .secondary-links li a[href*="facebook.com"]:hover::before, .secondary-links li a[href*="twitter.com"]:hover::before, .secondary-links li a[href*="dribbble.com"]:hover::before, .secondary-links li a[href*="plus.google.com"]:hover::before, .secondary-links li a[href*="pinterest.com"]:hover::before, .secondary-links li a[href*="github.com"]:hover::before, .secondary-links li a[href*="tumblr.com"]:hover::before, .secondary-links li a[href*="youtube.com"]:hover::before, .secondary-links li a[href*="flickr.com"]:hover::before, .secondary-links li a[href*="vimeo.com"]:hover::before, .secondary-links li a[href*="instagram.com"]:hover::before, .secondary-links li a[href*="codepen.io"]:hover::before, .secondary-links li a[href*="linkedin.com"]:hover::before, .secondary-links li a[href*="foursquare.com"]:hover::before, .secondary-links li a[href*="reddit.com"]:hover::before, .secondary-links li a[href*="digg.com"]:hover::before, .secondary-links li a[href*="getpocket.com"]:hover::before, .secondary-links li a[href*="path.com"]:hover::before, .secondary-links li a[href*="stumbleupon.com"]:hover::before, .secondary-links li a[href*="spotify.com"]:hover::before, .secondary-links li a[href*="twitch.tv"]:hover::before, .secondary-links li a[href*="dropbox.com"]:hover::before, .secondary-links li a[href*="/feed"]:hover::before, .secondary-links li a[href*="skype"]:hover::before, .secondary-links li a[href*="mailto"]:hover::before { border-color: #000000;}
+.widget.widget_wpcom_social_media_icons_widget ul a:hover::before, .widget.jetpack_widget_social_icons ul a:hover,
+					.secondary-links li a[href*="wordpress.org"]:hover::before, .secondary-links li a[href*="facebook.com"]:hover::before, .secondary-links li a[href*="twitter.com"]:hover::before, .secondary-links li a[href*="dribbble.com"]:hover::before, .secondary-links li a[href*="plus.google.com"]:hover::before, .secondary-links li a[href*="pinterest.com"]:hover::before, .secondary-links li a[href*="github.com"]:hover::before, .secondary-links li a[href*="tumblr.com"]:hover::before, .secondary-links li a[href*="youtube.com"]:hover::before, .secondary-links li a[href*="flickr.com"]:hover::before, .secondary-links li a[href*="vimeo.com"]:hover::before, .secondary-links li a[href*="instagram.com"]:hover::before, .secondary-links li a[href*="codepen.io"]:hover::before, .secondary-links li a[href*="linkedin.com"]:hover::before, .secondary-links li a[href*="foursquare.com"]:hover::before, .secondary-links li a[href*="reddit.com"]:hover::before, .secondary-links li a[href*="digg.com"]:hover::before, .secondary-links li a[href*="getpocket.com"]:hover::before, .secondary-links li a[href*="path.com"]:hover::before, .secondary-links li a[href*="stumbleupon.com"]:hover::before, .secondary-links li a[href*="spotify.com"]:hover::before, .secondary-links li a[href*="twitch.tv"]:hover::before, .secondary-links li a[href*="dropbox.com"]:hover::before, .secondary-links li a[href*="/feed"]:hover::before, .secondary-links li a[href*="skype"]:hover::before, .secondary-links li a[href*="mailto"]:hover::before { color: #000000;}
+.pique-panel { background-color: #796B6B;}
+h1, h2, h3, blockquote cite, h4, h5, h6,
+					input[type="text"]:focus,
+					input[type="email"]:focus,
+					input[type="url"]:focus,
+					input[type="password"]:focus,
+					input[type="search"]:focus,
+					textarea:focus,
+					button:hover,
+					.archive .read-more a:hover,
+					.blog .read-more a:hover,
+					.search-results .read-more a:hover,
+					.button:hover,
+					input[type="button"]:hover,
+					input[type="reset"]:hover,
+					input[type="submit"]:hover,
+					button:active,
+					.archive .read-more a:active,
+					.blog .read-more a:active,
+					.search-results .read-more a:active,
+					button:focus,
+					.archive .read-more a:focus,
+					.blog .read-more a:focus,
+					.search-results .read-more a:focus,
+					.button:active,
+					.button:focus,
+					input[type="button"]:active,
+					input[type="button"]:focus,
+					input[type="reset"]:active,
+					input[type="reset"]:focus,
+					input[type="submit"]:active,
+					input[type="submit"]:focus,
+					button.minimal,
+					.archive .read-more a.minimal,
+					.blog .read-more a.minimal,
+					.search-results .read-more a.minimal,
+					.button.minimal,
+					input[type="button"].minimal,
+					input[type="reset"].minimal,
+					input[type="submit"].minimal,
+					a,
+					ul.products li.product .added_to_cart:hover,
+					.woocommerce-message,
+					.woocommerce-info,
+					.woocommerce-error,
+					.woocommerce-noreviews,
+					p.no-comments,
+					.site-header-cart .woocommerce.widget_shopping_cart .woocommerce-mini-cart__buttons a:hover,
+					.woocommerce.widget_products .product_list_widget li a,
+					.woocommerce.widget_recent_reviews .product_list_widget li a,
+					.woocommerce.widget_shopping_cart .product_list_widget li a,
+					.woocommerce.widget_top_rated_products .product_list_widget li a,
+					.woocommerce.widget_recently_viewed_products .product_list_widget li a,
+					.woocommerce.widget_shopping_cart .woocommerce-mini-cart__buttons a:hover,
+					.widget_price_filter .ui-slider .ui-slider-handle { color: #C52F8B;}
+.widget-title { color: #DE78B7;}
+.main-navigation a:hover { color: #DE78B7;}
+input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="password"]:focus, input[type="search"]:focus, textarea:focus,
+					button:hover, .archive .read-more a:hover, .blog .read-more a:hover, .search-results .read-more a:hover, .button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover,
+					button:active, .archive .read-more a:active, .blog .read-more a:active, .search-results .read-more a:active, .button:active, input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active,
+					button:focus, .archive .read-more a:focus, .blog .read-more a:focus, .search-results .read-more a:focus, .button:focus, input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus,
+					ul.products li.product .added_to_cart:hover,
+					.woocommerce-tabs ul.tabs,
+					.woocommerce-tabs ul.tabs li { border-color: #C52F8B;}
+button:active, .button:active, input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active,
+				.archive .read-more a:active, .blog .read-more a:active, .search-results .read-more a:active,
+				button:focus, .button:focus, input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus,
+				.archive .read-more a:focus, .blog .read-more a:focus, .search-results .read-more a:focus { background-color: #de78b7;}
+button:active, .button:active, input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active,
+				.archive .read-more a:active, .blog .read-more a:active, .search-results .read-more a:active,
+				button:focus, .button:focus, input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus,
+				.archive .read-more a:focus, .blog .read-more a:focus, .search-results .read-more a:focus { background-color: rgba( 222, 120, 183, 0.05 );}
+.widget, .pique-panel-content form, .overlay, .single-product div.product .related { border-top-color: #C52F8B;}
+.comment-navigation, .posts-navigation, .post-navigation,
+			table.shop_table thead tr, table.shop_table_responsive thead tr,
+			.product .onsale,
+			.product .onsale:after,
+			.product .onsale:before { border-color: #C52F8B;}
+.comment-navigation .nav-previous a, .comment-navigation .nav-next a,	.posts-navigation .nav-previous a,	.posts-navigation .nav-next a,	.post-navigation .nav-previous a,	.post-navigation .nav-next a, .product .onsale { color: #C52F8B;}
+.comment-navigation .nav-previous a span, .comment-navigation .nav-next a span, .posts-navigation .nav-previous a span, .posts-navigation .nav-next a span, .post-navigation .nav-previous a span, .post-navigation .nav-next a span { color: #DB6DB1;}
+.infinite-scroll #infinite-handle button:hover, .infinite-scroll #infinite-handle .archive .read-more a:hover, .archive .read-more .infinite-scroll #infinite-handle a:hover, .infinite-scroll #infinite-handle .blog .read-more a:hover, .blog .read-more .infinite-scroll #infinite-handle a:hover, .infinite-scroll #infinite-handle .search-results .read-more a:hover, .search-results .read-more .infinite-scroll #infinite-handle a:hover { color: #DB6DB1;}
+.pique-template-testimonials .pique-testimonials article .entry-content cite,
+					.site-branding .site-title,
+					#pique-hero .pique-panel-content .entry-content em,
+					.pique-template-grid .pique-panel-content h3,
+					.pique-template-grid .pique-panel-content blockquote cite,
+					blockquote .pique-template-grid .pique-panel-content cite,
+					.pique-template-grid .pique-panel-content .pique-template-testimonials .pique-testimonials article .entry-content cite,
+					.pique-template-testimonials .pique-testimonials article .entry-content .pique-template-grid .pique-panel-content cite,
+					.pique-template-grid .pique-panel-content .site-branding .site-title,
+					.site-branding .pique-template-grid .pique-panel-content .site-title,
+					.pique-template-grid .pique-panel-content .widget-title,
+					.pique-template-grid .pique-panel-content h3 a,
+					.pique-template-grid .pique-panel-content blockquote cite a,
+					blockquote .pique-template-grid .pique-panel-content cite a,
+					.pique-template-grid .pique-panel-content .pique-template-testimonials .pique-testimonials article .entry-content cite a,
+					.pique-template-testimonials .pique-testimonials article .entry-content .pique-template-grid .pique-panel-content cite a,
+					.pique-template-grid .pique-panel-content .site-branding .site-title a,
+					.site-branding .pique-template-grid .pique-panel-content .site-title a,
+					.pique-template-grid .pique-panel-content .widget-title a,
+					.pique-template-testimonials .pique-panel-content h3,
+					.pique-template-testimonials .pique-panel-content blockquote cite,
+					blockquote .pique-template-testimonials .pique-panel-content cite,
+					.pique-template-testimonials .pique-panel-content .pique-testimonials article .entry-content cite,
+					.pique-template-testimonials .pique-testimonials article .entry-content .pique-panel-content cite,
+					.pique-template-testimonials .pique-panel-content .site-branding .site-title,
+					.site-branding .pique-template-testimonials .pique-panel-content .site-title,
+					.pique-template-testimonials .pique-panel-content .widget-title,
+					.pique-template-testimonials .pique-panel-content h3 a,
+					.pique-template-testimonials .pique-panel-content blockquote cite a,
+					blockquote .pique-template-testimonials .pique-panel-content cite a,
+					.pique-template-testimonials .pique-panel-content .pique-testimonials article .entry-content cite a,
+					.pique-template-testimonials .pique-testimonials article .entry-content .pique-panel-content cite a,
+					.pique-template-testimonials .pique-panel-content .site-branding .site-title a,
+					.site-branding .pique-template-testimonials .pique-panel-content .site-title a,
+					.pique-template-testimonials .pique-panel-content .widget-title a,
+					.pique-template-recent-posts .pique-panel-content h3,
+					.pique-template-recent-posts .pique-panel-content blockquote cite,
+					blockquote .pique-template-recent-posts .pique-panel-content cite,
+					.pique-template-recent-posts .pique-panel-content .pique-template-testimonials .pique-testimonials article .entry-content cite,
+					.pique-template-testimonials .pique-testimonials article .entry-content .pique-template-recent-posts .pique-panel-content cite,
+					.pique-template-recent-posts .pique-panel-content .site-branding .site-title,
+					.site-branding .pique-template-recent-posts .pique-panel-content .site-title,
+					.pique-template-recent-posts .pique-panel-content .widget-title,
+					.pique-template-recent-posts .pique-panel-content h3 a,
+					.pique-template-recent-posts .pique-panel-content blockquote cite a,
+					blockquote .pique-template-recent-posts .pique-panel-content cite a,
+					.pique-template-recent-posts .pique-panel-content .pique-template-testimonials .pique-testimonials article .entry-content cite a,
+					.pique-template-testimonials .pique-testimonials article .entry-content .pique-template-recent-posts .pique-panel-content cite a,
+					.pique-template-recent-posts .pique-panel-content .site-branding .site-title a,
+					.site-branding .pique-template-recent-posts .pique-panel-content .site-title a,
+					.pique-template-recent-posts .pique-panel-content .widget-title a,
+					.infinite-scroll #infinite-handle button,
+					.infinite-scroll #infinite-handle .archive .read-more a,
+					.archive .read-more .infinite-scroll #infinite-handle a,
+					.infinite-scroll #infinite-handle .blog .read-more a,
+					.blog .read-more .infinite-scroll #infinite-handle a,
+					.infinite-scroll #infinite-handle .search-results .read-more a,
+					.search-results .read-more .infinite-scroll #infinite-handle a,
+					.star-rating span:before,
+					p.stars:hover a:before,
+					p.stars.selected a.active:before,
+					p.stars.selected a:not(.active):before,
+					.woocommerce-tabs ul.tabs li:not(.active):hover a,
+					.woocommerce-tabs ul.tabs li a,
+					.woocommerce-MyAccount-content .woocommerce-info,
+					.widget_price_filter .ui-slider .ui-slider-handle:hover,
+					.widget_price_filter .ui-slider .ui-slider-handle.ui-state-active { color: #de78b7;}
+.comment-list .children { border-left-color: #de78b7;}
+button,
+				.archive .read-more a,
+				.blog .read-more a,
+				.search-results .read-more a,
+				.button,
+				input[type="button"],
+				input[type="reset"],
+				input[type="submit"],
+				ul.products li.product .added_to_cart,
+				.woocommerce-tabs ul.tabs li:not(.active),
+				.demo_store { background: #de78b7;}
+a:hover, a:focus, a:active,
+					.posts-navigation a,
+					.site-main .posts-navigation a,
+					.site-footer a,
+					.pique-template-testimonials .pique-testimonials h2,
+					.site-header-cart .woocommerce.widget_shopping_cart .product_list_widget li a:hover,
+					.site-header-cart .woocommerce.widget .amount,
+					.site-header-cart .woocommerce.widget .reviewer,
+					.site-header-cart .woocommerce.widget .total,
+					.site-header-cart .woocommerce.widget .quantity,
+					.woocommerce-MyAccount-navigation li.is-active a,
+					.footer-widget-area .woocommerce.widget .amount,
+					.footer-widget-area .woocommerce.widget .reviewer,
+					.footer-widget-area .woocommerce.widget .total,
+					.footer-widget-area .woocommerce.widget .quantity,
+					.woocommerce.widget ul a:hover,
+					#tertiary .woocommerce.widget ul a:hover,
+					#tertiary .woocommerce.widget:not(.widget_wpcom_social_media_icons_widget):not(.jetpack_widget_social_icons) ul a:hover { color: #6D6D6D;}
+.main-navigation .current_page_item > a,
+					.main-navigation .current-menu-item > a,
+					.main-navigation .current_page_ancestor > a,
+					.main-navigation ul ul a { color: #EEEEEE;}
+.widget.widget_wpcom_social_media_icons_widget ul a::before, .widget.jetpack_widget_social_icons ul a,
+			.secondary-links li a[href*="wordpress.org"]::before, .secondary-links li a[href*="facebook.com"]::before, .secondary-links li a[href*="twitter.com"]::before, .secondary-links li a[href*="dribbble.com"]::before, .secondary-links li a[href*="plus.google.com"]::before, .secondary-links li a[href*="pinterest.com"]::before, .secondary-links li a[href*="github.com"]::before, .secondary-links li a[href*="tumblr.com"]::before, .secondary-links li a[href*="youtube.com"]::before, .secondary-links li a[href*="flickr.com"]::before, .secondary-links li a[href*="vimeo.com"]::before, .secondary-links li a[href*="instagram.com"]::before, .secondary-links li a[href*="codepen.io"]::before, .secondary-links li a[href*="linkedin.com"]::before, .secondary-links li a[href*="foursquare.com"]::before, .secondary-links li a[href*="reddit.com"]::before, .secondary-links li a[href*="digg.com"]::before, .secondary-links li a[href*="getpocket.com"]::before, .secondary-links li a[href*="path.com"]::before, .secondary-links li a[href*="stumbleupon.com"]::before, .secondary-links li a[href*="spotify.com"]::before, .secondary-links li a[href*="twitch.tv"]::before, .secondary-links li a[href*="dropbox.com"]::before, .secondary-links li a[href*="/feed"]::before, .secondary-links li a[href*="skype"]::before, .secondary-links li a[href*="mailto"]::before { color: #EEEEEE;}
+.widget.widget_wpcom_social_media_icons_widget ul a, .widget.jetpack_widget_social_icons ul a,
+						.secondary-links li a[href*="wordpress.org"]::before, .secondary-links li a[href*="facebook.com"]::before, .secondary-links li a[href*="twitter.com"]::before, .secondary-links li a[href*="dribbble.com"]::before, .secondary-links li a[href*="plus.google.com"]::before, .secondary-links li a[href*="pinterest.com"]::before, .secondary-links li a[href*="github.com"]::before, .secondary-links li a[href*="tumblr.com"]::before, .secondary-links li a[href*="youtube.com"]::before, .secondary-links li a[href*="flickr.com"]::before, .secondary-links li a[href*="vimeo.com"]::before, .secondary-links li a[href*="instagram.com"]::before, .secondary-links li a[href*="codepen.io"]::before, .secondary-links li a[href*="linkedin.com"]::before, .secondary-links li a[href*="foursquare.com"]::before, .secondary-links li a[href*="reddit.com"]::before, .secondary-links li a[href*="digg.com"]::before, .secondary-links li a[href*="getpocket.com"]::before, .secondary-links li a[href*="path.com"]::before, .secondary-links li a[href*="stumbleupon.com"]::before, .secondary-links li a[href*="spotify.com"]::before, .secondary-links li a[href*="twitch.tv"]::before, .secondary-links li a[href*="dropbox.com"]::before, .secondary-links li a[href*="/feed"]::before, .secondary-links li a[href*="skype"]::before, .secondary-links li a[href*="mailto"]::before,
+						.woocommerce-MyAccount-navigation li.is-active a { border-color: #EEEEEE;}
+.widget.widget_wpcom_social_media_icons_widget ul a:hover, .widget.jetpack_widget_social_icons ul a:hover,
+				.secondary-links li a[href*="wordpress.org"]:hover::before, .secondary-links li a[href*="facebook.com"]:hover::before, .secondary-links li a[href*="twitter.com"]:hover::before, .secondary-links li a[href*="dribbble.com"]:hover::before, .secondary-links li a[href*="plus.google.com"]:hover::before, .secondary-links li a[href*="pinterest.com"]:hover::before, .secondary-links li a[href*="github.com"]:hover::before, .secondary-links li a[href*="tumblr.com"]:hover::before, .secondary-links li a[href*="youtube.com"]:hover::before, .secondary-links li a[href*="flickr.com"]:hover::before, .secondary-links li a[href*="vimeo.com"]:hover::before, .secondary-links li a[href*="instagram.com"]:hover::before, .secondary-links li a[href*="codepen.io"]:hover::before, .secondary-links li a[href*="linkedin.com"]:hover::before, .secondary-links li a[href*="foursquare.com"]:hover::before, .secondary-links li a[href*="reddit.com"]:hover::before, .secondary-links li a[href*="digg.com"]:hover::before, .secondary-links li a[href*="getpocket.com"]:hover::before, .secondary-links li a[href*="path.com"]:hover::before, .secondary-links li a[href*="stumbleupon.com"]:hover::before, .secondary-links li a[href*="spotify.com"]:hover::before, .secondary-links li a[href*="twitch.tv"]:hover::before, .secondary-links li a[href*="dropbox.com"]:hover::before, .secondary-links li a[href*="/feed"]:hover::before, .secondary-links li a[href*="skype"]:hover::before, .secondary-links li a[href*="mailto"]:hover::before { background-color: #E0E0E0;}
+hr,
+					.bypostauthor { background-color: #eeeeee;}
+</style>
+<link rel="icon" href="https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-7908e9fe-55b9-492f-8fcd-80ba05e95bc8.png?w=32" sizes="32x32" />
+<link rel="icon" href="https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-7908e9fe-55b9-492f-8fcd-80ba05e95bc8.png?w=192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-7908e9fe-55b9-492f-8fcd-80ba05e95bc8.png?w=180" />
+<meta name="msapplication-TileImage" content="https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-7908e9fe-55b9-492f-8fcd-80ba05e95bc8.png?w=270" />
+</head>
+
+<body class="home page-template-default page page-id-967 custom-background wp-custom-logo wp-embed-responsive customizer-styles-applied pique-frontpage pique-no-panels pique-singular has-site-logo highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	<header id="masthead" class="site-header" role="banner">
+
+		
+		<div class="site-branding">
+			<a href="index.html" class="site-logo-link" rel="home" itemprop="url"><img width="170" height="200" src="https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg?w=170" class="site-logo attachment-pique-logo" alt="" loading="lazy" data-size="pique-logo" itemprop="logo" srcset="https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg?w=170 170w, https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg?w=340 340w, https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg?w=127 127w, https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg?w=254 254w" sizes="(max-width: 170px) 100vw, 170px" data-attachment-id="1006" data-permalink="https://mythicaleve.com/cropped-0732f625-b037-4009-99db-8fc7c3695123-jpg/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg" data-orig-size="397,468" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg" data-image-description="&lt;p&gt;https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg&lt;/p&gt;
+" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg?w=254" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/cropped-0732f625-b037-4009-99db-8fc7c3695123.jpg?w=397" /></a>			<h1 class="site-title"><a href="index.html" title="Tanya ST Omelchuk Art" rel="home">Tanya ST Omelchuk Art</a></h1>
+			<p class="site-description">Watercolour Portrait and Illustration</p>
+		</div><!-- .site-branding -->
+
+				<div id="site-navigation-wrapper">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<div class="menu-primary-container"><ul id="primary-menu" class="menu"><li id="menu-item-1001" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-967 current_page_item menu-item-1001"><a href="index.html">Portfolio</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21"><a href="about/index.html">About</a></li>
+<li id="menu-item-894" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-894"><a href="available-for-sale/index.html">Available for Sale</a></li>
+<li id="menu-item-1063" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1063"><a href="commission-work/index.html">Commission work</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="contact/index.html">Contact</a></li>
+<li id="more-menu" class="menu-item menu-item-has-children"><a href="#"><span class="screen-reader-text">More</span></a><ul class="sub-menu"></ul></li></ul></div>			</nav><!-- #site-navigation -->
+		</div>
+		
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+
+	
+<article id="pique-hero" class="pique-panel post-967 page type-page status-publish has-post-thumbnail hentry">
+			<div class="pique-panel-background" style="background-image:url(https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal.webp?w=1216&h=1000&crop=1)"></div>
+	
+	<div class="pique-panel-content">
+
+		<div class="entry-content">
+
+		
+<div style="height:0;" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<div class="wp-block-jetpack-layout-grid alignfull column1-desktop-grid__span-12 column1-desktop-grid__row-1 column1-tablet-grid__span-8 column1-tablet-grid__row-1 column1-mobile-grid__span-4 column1-mobile-grid__row-1">
+<div class="wp-block-jetpack-layout-grid-column wp-block-jetpack-layout-grid__padding-none">
+<h1 class="has-text-align-center has-medium-font-size" id="welcome-to-tanya-st-omelchuk-art-space">Welcome to Tanya ST Omelchuk art space</h1>
+</div>
+</div>
+
+
+
+<p class="has-text-align-center margin-bottom-half has-small-font-size">Canadian watercolour portrait artist and illustrator creating art from Montreal, Quebec</p>
+
+
+
+<ul class="is-layout-flex wp-block-social-links aligncenter margin-top-half is-style-default">
+
+<li class="wp-social-link wp-social-link-instagram wp-block-social-link"><a href="https://instagram.com/mythicaleve"  class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12,4.622c2.403,0,2.688,0.009,3.637,0.052c0.877,0.04,1.354,0.187,1.671,0.31c0.42,0.163,0.72,0.358,1.035,0.673 c0.315,0.315,0.51,0.615,0.673,1.035c0.123,0.317,0.27,0.794,0.31,1.671c0.043,0.949,0.052,1.234,0.052,3.637 s-0.009,2.688-0.052,3.637c-0.04,0.877-0.187,1.354-0.31,1.671c-0.163,0.42-0.358,0.72-0.673,1.035 c-0.315,0.315-0.615,0.51-1.035,0.673c-0.317,0.123-0.794,0.27-1.671,0.31c-0.949,0.043-1.233,0.052-3.637,0.052 s-2.688-0.009-3.637-0.052c-0.877-0.04-1.354-0.187-1.671-0.31c-0.42-0.163-0.72-0.358-1.035-0.673 c-0.315-0.315-0.51-0.615-0.673-1.035c-0.123-0.317-0.27-0.794-0.31-1.671C4.631,14.688,4.622,14.403,4.622,12 s0.009-2.688,0.052-3.637c0.04-0.877,0.187-1.354,0.31-1.671c0.163-0.42,0.358-0.72,0.673-1.035 c0.315-0.315,0.615-0.51,1.035-0.673c0.317-0.123,0.794-0.27,1.671-0.31C9.312,4.631,9.597,4.622,12,4.622 M12,3 C9.556,3,9.249,3.01,8.289,3.054C7.331,3.098,6.677,3.25,6.105,3.472C5.513,3.702,5.011,4.01,4.511,4.511 c-0.5,0.5-0.808,1.002-1.038,1.594C3.25,6.677,3.098,7.331,3.054,8.289C3.01,9.249,3,9.556,3,12c0,2.444,0.01,2.751,0.054,3.711 c0.044,0.958,0.196,1.612,0.418,2.185c0.23,0.592,0.538,1.094,1.038,1.594c0.5,0.5,1.002,0.808,1.594,1.038 c0.572,0.222,1.227,0.375,2.185,0.418C9.249,20.99,9.556,21,12,21s2.751-0.01,3.711-0.054c0.958-0.044,1.612-0.196,2.185-0.418 c0.592-0.23,1.094-0.538,1.594-1.038c0.5-0.5,0.808-1.002,1.038-1.594c0.222-0.572,0.375-1.227,0.418-2.185 C20.99,14.751,21,14.444,21,12s-0.01-2.751-0.054-3.711c-0.044-0.958-0.196-1.612-0.418-2.185c-0.23-0.592-0.538-1.094-1.038-1.594 c-0.5-0.5-1.002-0.808-1.594-1.038c-0.572-0.222-1.227-0.375-2.185-0.418C14.751,3.01,14.444,3,12,3L12,3z M12,7.378 c-2.552,0-4.622,2.069-4.622,4.622S9.448,16.622,12,16.622s4.622-2.069,4.622-4.622S14.552,7.378,12,7.378z M12,15 c-1.657,0-3-1.343-3-3s1.343-3,3-3s3,1.343,3,3S13.657,15,12,15z M16.804,6.116c-0.596,0-1.08,0.484-1.08,1.08 s0.484,1.08,1.08,1.08c0.596,0,1.08-0.484,1.08-1.08S17.401,6.116,16.804,6.116z"></path></svg><span class="wp-block-social-link-label screen-reader-text">Instagram</span></a></li>
+
+
+
+</ul>
+
+
+
+<div style="height:44px;" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<p></p>
+
+
+
+<div class="is-layout-flex wp-container-4 wp-block-columns">
+<div class="is-layout-flow wp-block-column" style="flex-basis:100%;">
+<div class="is-layout-flex wp-container-2 wp-block-columns are-vertically-aligned-center"></div>
+</div>
+</div>
+
+
+
+<div class="wp-block-jetpack-layout-grid alignfull column1-desktop-grid__span-3 column1-desktop-grid__start-2 column1-desktop-grid__row-1 column2-desktop-grid__span-7 column2-desktop-grid__start-5 column2-desktop-grid__row-1 column1-tablet-grid__span-4 column1-tablet-grid__row-1 column2-tablet-grid__span-4 column2-tablet-grid__start-5 column2-tablet-grid__row-1 column1-mobile-grid__span-4 column1-mobile-grid__row-1 column2-mobile-grid__span-4 column2-mobile-grid__row-2">
+<div class="wp-block-jetpack-layout-grid-column wp-block-jetpack-layout-grid__padding-none">
+<h3 id="2020-2022">2020-2022</h3>
+
+
+
+<p class="has-small-font-size"></p>
+</div>
+
+
+
+<div class="wp-block-jetpack-layout-grid-column wp-block-jetpack-layout-grid__padding-none">
+<figure data-carousel-extra='{"blog_id":176465678,"permalink":"https:\/\/mythicaleve.com\/"}'  class="is-layout-flex wp-block-gallery-5 wp-block-gallery has-nested-images columns-default is-cropped">
+<figure class="wp-block-image size-large"><img data-attachment-id="1220" data-permalink="https://mythicaleve.com/portfolio/491cdb67-7f1a-4b31-a26b-546c28098f42/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg" data-orig-size="2476,2542" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="491CDB67-7F1A-4B31-A26B-546C28098F42" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=292" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=997" alt="" class="wp-image-1220" srcset="https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=997 997w, https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=1994 1994w, https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=146 146w, https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=292 292w, https://tanyaomelchuk.files.wordpress.com/2022/07/491cdb67-7f1a-4b31-a26b-546c28098f42.jpeg?w=768 768w" sizes="(max-width: 997px) 100vw, 997px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1219" data-permalink="https://mythicaleve.com/portfolio/0a32d751-e8ff-4244-815f-9523e449cf35/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg" data-orig-size="2802,3469" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="0A32D751-E8FF-4244-815F-9523E449CF35" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=242" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=827" alt="" class="wp-image-1219" srcset="https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=827 827w, https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=1654 1654w, https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=121 121w, https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=242 242w, https://tanyaomelchuk.files.wordpress.com/2022/07/0a32d751-e8ff-4244-815f-9523e449cf35.jpeg?w=768 768w" sizes="(max-width: 827px) 100vw, 827px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1218" data-permalink="https://mythicaleve.com/portfolio/cfb40d31-831a-4071-9d49-8584728367ee/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg" data-orig-size="2541,3201" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="CFB40D31-831A-4071-9D49-8584728367EE" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=238" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=813" alt="" class="wp-image-1218" srcset="https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=813 813w, https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=1626 1626w, https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=119 119w, https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=238 238w, https://tanyaomelchuk.files.wordpress.com/2022/07/cfb40d31-831a-4071-9d49-8584728367ee.jpeg?w=768 768w" sizes="(max-width: 813px) 100vw, 813px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1133" data-permalink="https://mythicaleve.com/portfolio/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg" data-orig-size="2469,3130" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="E36B6BDD-4C1B-447B-9C58-1A0DA94F79AC" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=237" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=808" alt="" class="wp-image-1133" srcset="https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=808 808w, https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=1616 1616w, https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=118 118w, https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=237 237w, https://tanyaomelchuk.files.wordpress.com/2022/06/e36b6bdd-4c1b-447b-9c58-1a0da94f79ac.jpeg?w=768 768w" sizes="(max-width: 808px) 100vw, 808px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1151" data-permalink="https://mythicaleve.com/portfolio/5fb213b8-4b11-4382-a45e-d97eaf58d6e4/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg" data-orig-size="2354,2973" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="5FB213B8-4B11-4382-A45E-D97EAF58D6E4" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=238" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=811" alt="" class="wp-image-1151" srcset="https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=811 811w, https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=1622 1622w, https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=119 119w, https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=238 238w, https://tanyaomelchuk.files.wordpress.com/2022/06/5fb213b8-4b11-4382-a45e-d97eaf58d6e4.jpeg?w=768 768w" sizes="(max-width: 811px) 100vw, 811px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1135" data-permalink="https://mythicaleve.com/portfolio/3102ffc3-bd20-4dbd-afdd-144868302e9c/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg" data-orig-size="2655,3054" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;1.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPad Pro (11-inch) (2nd generation)&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1655465228&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;3&quot;,&quot;iso&quot;:&quot;100&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="3102FFC3-BD20-4DBD-AFDD-144868302E9C" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=261" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=890" alt="" class="wp-image-1135" srcset="https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=890 890w, https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=1780 1780w, https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=130 130w, https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=261 261w, https://tanyaomelchuk.files.wordpress.com/2022/06/3102ffc3-bd20-4dbd-afdd-144868302e9c.jpeg?w=768 768w" sizes="(max-width: 890px) 100vw, 890px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1134" data-permalink="https://mythicaleve.com/portfolio/860eb496-ba92-41b3-9cd6-72ef06f1da9f/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg" data-orig-size="2346,2363" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="860EB496-BA92-41B3-9CD6-72EF06F1DA9F" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=298" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=1017" alt="" class="wp-image-1134" srcset="https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=1017 1017w, https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=2034 2034w, https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=150 150w, https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=298 298w, https://tanyaomelchuk.files.wordpress.com/2022/06/860eb496-ba92-41b3-9cd6-72ef06f1da9f.jpeg?w=768 768w" sizes="(max-width: 1017px) 100vw, 1017px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1136" data-permalink="https://mythicaleve.com/portfolio/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg" data-orig-size="2127,2703" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="9AAA1A0B-CBAB-4F4F-87D0-D395D3D464CD" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=236" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=806" alt="" class="wp-image-1136" srcset="https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=806 806w, https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=1612 1612w, https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=118 118w, https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=236 236w, https://tanyaomelchuk.files.wordpress.com/2022/06/9aaa1a0b-cbab-4f4f-87d0-d395d3d464cd.jpeg?w=768 768w" sizes="(max-width: 806px) 100vw, 806px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1148" data-permalink="https://mythicaleve.com/portfolio/1989e6f1-e7bd-4ce4-93e6-59d4f287d140/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg" data-orig-size="1099,1325" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1656015022&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="1989E6F1-E7BD-4CE4-93E6-59D4F287D140" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg?w=249" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg?w=849" alt="" class="wp-image-1148" srcset="https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg?w=849 849w, https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg?w=124 124w, https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg?w=249 249w, https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg?w=768 768w, https://tanyaomelchuk.files.wordpress.com/2022/06/1989e6f1-e7bd-4ce4-93e6-59d4f287d140.jpeg 1099w" sizes="(max-width: 849px) 100vw, 849px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1041" data-permalink="https://mythicaleve.com/f73ba251-ac38-4e2a-8047-e668381a3377/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg" data-orig-size="2628,2606" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="f73ba251-ac38-4e2a-8047-e668381a3377" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=1024" alt="" class="wp-image-1041" srcset="https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=1024 1024w, https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=2048 2048w, https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=150 150w, https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=300 300w, https://tanyaomelchuk.files.wordpress.com/2022/03/f73ba251-ac38-4e2a-8047-e668381a3377.jpeg?w=768 768w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1034" data-permalink="https://mythicaleve.com/portfolio/1d85ee5b-42c2-46f3-9b3a-ed574d9bca08/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/1d85ee5b-42c2-46f3-9b3a-ed574d9bca08.jpeg" data-orig-size="2640,2647" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;1.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPad Pro (11-inch) (2nd generation)&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1645618787&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;3&quot;,&quot;iso&quot;:&quot;100&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="1D85EE5B-42C2-46F3-9B3A-ED574D9BCA08" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/1d85ee5b-42c2-46f3-9b3a-ed574d9bca08.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/1d85ee5b-42c2-46f3-9b3a-ed574d9bca08.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/1d85ee5b-42c2-46f3-9b3a-ed574d9bca08.jpeg" alt="" class="wp-image-1034" /><figcaption class="wp-element-caption">An Artist <br>8&#215;8” watercolor</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1036" data-permalink="https://mythicaleve.com/portfolio/7558ef01-2389-4a7c-92c1-74dfa61f0429/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/7558ef01-2389-4a7c-92c1-74dfa61f0429.jpeg" data-orig-size="2700,2678" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="7558EF01-2389-4A7C-92C1-74DFA61F0429" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/7558ef01-2389-4a7c-92c1-74dfa61f0429.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/7558ef01-2389-4a7c-92c1-74dfa61f0429.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/7558ef01-2389-4a7c-92c1-74dfa61f0429.jpeg" alt="" class="wp-image-1036" /><figcaption class="wp-element-caption">Dreams <br>8&#215;8” watercolor</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="971" data-permalink="https://mythicaleve.com/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg" data-orig-size="1815,2758" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=197" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=674" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=674" alt="" class="wp-image-971" srcset="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=674 674w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=1348 1348w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=99 99w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=197 197w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melody-newborn-watercolour-by-tanya-st-montreal-1.jpeg?w=768 768w" sizes="(max-width: 674px) 100vw, 674px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="976" data-permalink="https://mythicaleve.com/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal.webp" data-orig-size="1216,1496" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal.webp?w=244" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal.webp?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-mother-and-daughter-by-tanya-st-watercolor-montreal.webp?w=832" alt="" class="wp-image-976" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="978" data-permalink="https://mythicaleve.com/portrait-of-a-young-girl-by-tanya-st-watercolor-montreal/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-young-girl-by-tanya-st-watercolor-montreal.webp" data-orig-size="1052,1495" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-of-a-young-girl-by-tanya-st-watercolor-montreal" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-young-girl-by-tanya-st-watercolor-montreal.webp?w=211" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-young-girl-by-tanya-st-watercolor-montreal.webp?w=721" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-young-girl-by-tanya-st-watercolor-montreal.webp?w=721" alt="" class="wp-image-978" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="969" data-permalink="https://mythicaleve.com/portrait-of-young-man-watercolour-by-tanya-st-montreal-2/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg" data-orig-size="2092,2231" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="portrait-of-young-man-watercolour-by-tanya-st-montreal-2" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=281" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=960" alt="" class="wp-image-969" srcset="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=960 960w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=1920 1920w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=141 141w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=281 281w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-young-man-watercolour-by-tanya-st-montreal-2.jpeg?w=768 768w" sizes="(max-width: 960px) 100vw, 960px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="970" data-permalink="https://mythicaleve.com/portrait-of-milana-watercolour-montreal-by-tanya-st-3/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg" data-orig-size="1386,1630" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="portrait-of-milana-watercolour-montreal-by-tanya-st-3" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg?w=255" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg?w=871" alt="" class="wp-image-970" srcset="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg?w=871 871w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg?w=128 128w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg?w=255 255w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg?w=768 768w, https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-milana-watercolour-montreal-by-tanya-st-3.jpeg 1386w" sizes="(max-width: 871px) 100vw, 871px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="974" data-permalink="https://mythicaleve.com/portrait-woman-by-tanya-st-watercolour-montreal/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-woman-by-tanya-st-watercolour-montreal.webp" data-orig-size="1501,1501" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-woman-by-tanya-st-watercolour-montreal" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-woman-by-tanya-st-watercolour-montreal.webp?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-woman-by-tanya-st-watercolour-montreal.webp?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-woman-by-tanya-st-watercolour-montreal.webp?w=1024" alt="" class="wp-image-974" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="980" data-permalink="https://mythicaleve.com/portrait-of-a-man-2-by-tanya-st-watercolour-montreal/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-2-by-tanya-st-watercolour-montreal.webp" data-orig-size="1092,1495" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-of-a-man-2-by-tanya-st-watercolour-montreal" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-2-by-tanya-st-watercolour-montreal.webp?w=219" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-2-by-tanya-st-watercolour-montreal.webp?w=748" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-2-by-tanya-st-watercolour-montreal.webp?w=748" alt="" class="wp-image-980" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="977" data-permalink="https://mythicaleve.com/portrait-of-jimi-hendrix-by-tanya-st-watercolour-montreal/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-jimi-hendrix-by-tanya-st-watercolour-montreal.webp" data-orig-size="1496,1496" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-of-jimi-hendrix-by-tanya-st-watercolour-montreal" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-jimi-hendrix-by-tanya-st-watercolour-montreal.webp?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-jimi-hendrix-by-tanya-st-watercolour-montreal.webp?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-jimi-hendrix-by-tanya-st-watercolour-montreal.webp?w=1024" alt="" class="wp-image-977" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="979" data-permalink="https://mythicaleve.com/portrait-of-a-man-by-tanya-st-watercolour-montreal/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-by-tanya-st-watercolour-montreal.webp" data-orig-size="1488,1495" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-of-a-man-by-tanya-st-watercolour-montreal" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-by-tanya-st-watercolour-montreal.webp?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-by-tanya-st-watercolour-montreal.webp?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-man-by-tanya-st-watercolour-montreal.webp?w=1019" alt="" class="wp-image-979" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1064" data-permalink="https://mythicaleve.com/962153e4-f77a-4a9f-b593-89058a809d93/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg" data-orig-size="2065,2078" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="962153e4-f77a-4a9f-b593-89058a809d93" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=298" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=1018" alt="" class="wp-image-1064" srcset="https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=1018 1018w, https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=2036 2036w, https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=150 150w, https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=298 298w, https://tanyaomelchuk.files.wordpress.com/2022/04/962153e4-f77a-4a9f-b593-89058a809d93.jpeg?w=768 768w" sizes="(max-width: 1018px) 100vw, 1018px" /><figcaption class="wp-element-caption">Unbothered 6&#215;6” watercolor on board</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1065" data-permalink="https://mythicaleve.com/86118030-22df-447e-be17-aecf524772b4/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg" data-orig-size="2189,2191" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="86118030-22df-447e-be17-aecf524772b4" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=1024" alt="" class="wp-image-1065" srcset="https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=1024 1024w, https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=2048 2048w, https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=150 150w, https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=300 300w, https://tanyaomelchuk.files.wordpress.com/2022/04/86118030-22df-447e-be17-aecf524772b4.jpeg?w=768 768w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">Light 6&#215;6”<br>watercolor on board</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1013" data-permalink="https://mythicaleve.com/5804e5b4-ed49-49a8-9afc-481fee75dd05/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/5804e5b4-ed49-49a8-9afc-481fee75dd05.jpeg" data-orig-size="2612,2590" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;1.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPad Pro (11-inch) (2nd generation)&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1620255515&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;3&quot;,&quot;iso&quot;:&quot;25&quot;,&quot;shutter_speed&quot;:&quot;0.0081967213114754&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;,&quot;latitude&quot;:&quot;45.493947222222&quot;,&quot;longitude&quot;:&quot;-73.6239&quot;}" data-image-title="5804e5b4-ed49-49a8-9afc-481fee75dd05" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/5804e5b4-ed49-49a8-9afc-481fee75dd05.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/5804e5b4-ed49-49a8-9afc-481fee75dd05.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/5804e5b4-ed49-49a8-9afc-481fee75dd05.jpeg" alt="" class="wp-image-1013" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="946" data-permalink="https://mythicaleve.com/abstract-portrait-art-watercolour-by-tanya-st/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-art-watercolour-by-tanya-st.jpeg" data-orig-size="1918,2651" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="abstract-portrait-art-watercolour-by-tanya-st" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-art-watercolour-by-tanya-st.jpeg?w=217" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-art-watercolour-by-tanya-st.jpeg?w=741" src="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-art-watercolour-by-tanya-st.jpeg" alt="" class="wp-image-946" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="948" data-permalink="https://mythicaleve.com/abstract-portrait-watercolour-montreal-by-tanya-st/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-watercolour-montreal-by-tanya-st.jpeg" data-orig-size="1508,2330" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="abstract-portrait-watercolour-montreal-by-tanya-st" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-watercolour-montreal-by-tanya-st.jpeg?w=194" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-watercolour-montreal-by-tanya-st.jpeg?w=663" src="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-watercolour-montreal-by-tanya-st.jpeg" alt="" class="wp-image-948" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="773" data-permalink="https://mythicaleve.com/027c11e2-6d79-4629-80d3-8168f1336691/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/02/027c11e2-6d79-4629-80d3-8168f1336691.jpeg" data-orig-size="2683,1837" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="027c11e2-6d79-4629-80d3-8168f1336691" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/02/027c11e2-6d79-4629-80d3-8168f1336691.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/02/027c11e2-6d79-4629-80d3-8168f1336691.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2021/02/027c11e2-6d79-4629-80d3-8168f1336691.jpeg" alt="" class="wp-image-773" /></figure>
+</figure>
+</div>
+</div>
+
+
+
+<div style="height:100px;" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<div class="wp-block-jetpack-layout-grid alignfull column1-desktop-grid__span-3 column1-desktop-grid__start-2 column1-desktop-grid__row-1 column2-desktop-grid__span-6 column2-desktop-grid__start-5 column2-desktop-grid__row-1 column1-tablet-grid__span-4 column1-tablet-grid__row-1 column2-tablet-grid__span-4 column2-tablet-grid__start-5 column2-tablet-grid__row-1 column1-mobile-grid__span-4 column1-mobile-grid__row-1 column2-mobile-grid__span-4 column2-mobile-grid__row-2">
+<div class="wp-block-jetpack-layout-grid-column wp-block-jetpack-layout-grid__padding-none">
+<h3 id="2017-2019">2017-2019</h3>
+
+
+
+<p class="has-small-font-size">Street Art Montreal &#8211; New York</p>
+</div>
+
+
+
+<div class="wp-block-jetpack-layout-grid-column wp-block-jetpack-layout-grid__padding-none">
+<figure data-carousel-extra='{"blog_id":176465678,"permalink":"https:\/\/mythicaleve.com\/"}'  class="is-layout-flex wp-block-gallery-7 wp-block-gallery has-nested-images columns-default is-cropped">
+<figure class="wp-block-image size-large"><img data-attachment-id="988" data-permalink="https://mythicaleve.com/abstract-portrait-2-watercolour-by-tanya-st-montreal/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-2-watercolour-by-tanya-st-montreal.webp" data-orig-size="822,1136" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="abstract-portrait-2-watercolour-by-tanya-st-montreal" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-2-watercolour-by-tanya-st-montreal.webp?w=217" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-2-watercolour-by-tanya-st-montreal.webp?w=741" src="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-2-watercolour-by-tanya-st-montreal.webp?w=741" alt="" class="wp-image-988" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="991" data-permalink="https://mythicaleve.com/portrait-of-a-girl-watercolour-by-tanya-st-1-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-girl-watercolour-by-tanya-st-1-1.webp" data-orig-size="460,460" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-of-a-girl-watercolour-by-tanya-st-1-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-girl-watercolour-by-tanya-st-1-1.webp?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-girl-watercolour-by-tanya-st-1-1.webp?w=460" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-a-girl-watercolour-by-tanya-st-1-1.webp?w=460" alt="" class="wp-image-991" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="993" data-permalink="https://mythicaleve.com/portrait-of-melanie-watercolor-by-tanya-st-montreal-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melanie-watercolor-by-tanya-st-montreal-1.webp" data-orig-size="938,1305" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="portrait-of-melanie-watercolor-by-tanya-st-montreal-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melanie-watercolor-by-tanya-st-montreal-1.webp?w=216" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melanie-watercolor-by-tanya-st-montreal-1.webp?w=736" src="https://tanyaomelchuk.files.wordpress.com/2022/02/portrait-of-melanie-watercolor-by-tanya-st-montreal-1.webp?w=736" alt="" class="wp-image-993" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="298" data-permalink="https://mythicaleve.com/home/lip-bite/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/lip-bite.jpeg" data-orig-size="2436,3198" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="Lip bite" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/lip-bite.jpeg?w=229" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/lip-bite.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2020/05/lip-bite.jpeg" alt="" class="wp-image-298" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="995" data-permalink="https://mythicaleve.com/abstract-portrait-of-a-girl-watercolor-by-tanya-st-montreal-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-of-a-girl-watercolor-by-tanya-st-montreal-1.webp" data-orig-size="1834,1303" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="abstract-portrait-of-a-girl-watercolor-by-tanya-st-montreal-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-of-a-girl-watercolor-by-tanya-st-montreal-1.webp?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-of-a-girl-watercolor-by-tanya-st-montreal-1.webp?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/02/abstract-portrait-of-a-girl-watercolor-by-tanya-st-montreal-1.webp?w=1024" alt="" class="wp-image-995" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="862" data-permalink="https://mythicaleve.com/home/50e03628-ac74-4424-9173-2d16eab782c9/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/07/50e03628-ac74-4424-9173-2d16eab782c9.jpeg" data-orig-size="1681,2254" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;1.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPad Pro (11-inch) (2nd generation)&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1602762579&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;3&quot;,&quot;iso&quot;:&quot;20&quot;,&quot;shutter_speed&quot;:&quot;0.0081967213114754&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;,&quot;latitude&quot;:&quot;45.493888888889&quot;,&quot;longitude&quot;:&quot;-73.623908333333&quot;}" data-image-title="50E03628-AC74-4424-9173-2D16EAB782C9" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/07/50e03628-ac74-4424-9173-2d16eab782c9.jpeg?w=224" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/07/50e03628-ac74-4424-9173-2d16eab782c9.jpeg?w=764" src="https://tanyaomelchuk.files.wordpress.com/2021/07/50e03628-ac74-4424-9173-2d16eab782c9.jpeg" alt="" class="wp-image-862" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="696" data-permalink="https://mythicaleve.com/828fe227-cbaa-4363-a27f-fe03b6600de2/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg" data-orig-size="2720,3672" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="828fe227-cbaa-4363-a27f-fe03b6600de2" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=222" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=759" src="https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=759" alt="" class="wp-image-696" srcset="https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=759 759w, https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=1518 1518w, https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=111 111w, https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=222 222w, https://tanyaomelchuk.files.wordpress.com/2021/02/828fe227-cbaa-4363-a27f-fe03b6600de2.jpeg?w=768 768w" sizes="(max-width: 759px) 100vw, 759px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="778" data-permalink="https://mythicaleve.com/987dc9cf-cde1-4fd8-bc6b-7f32b5fdeeb3/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/02/987dc9cf-cde1-4fd8-bc6b-7f32b5fdeeb3.jpeg" data-orig-size="1987,2777" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;1.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPad Pro (11-inch) (2nd generation)&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1614049926&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;3&quot;,&quot;iso&quot;:&quot;32&quot;,&quot;shutter_speed&quot;:&quot;0.0081967213114754&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;,&quot;latitude&quot;:&quot;45.493958333333&quot;,&quot;longitude&quot;:&quot;-73.623925&quot;}" data-image-title="987dc9cf-cde1-4fd8-bc6b-7f32b5fdeeb3" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/02/987dc9cf-cde1-4fd8-bc6b-7f32b5fdeeb3.jpeg?w=215" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/02/987dc9cf-cde1-4fd8-bc6b-7f32b5fdeeb3.jpeg?w=733" src="https://tanyaomelchuk.files.wordpress.com/2021/02/987dc9cf-cde1-4fd8-bc6b-7f32b5fdeeb3.jpeg" alt="" class="wp-image-778" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="711" data-permalink="https://mythicaleve.com/b17626db-40f5-4c71-b3bf-e295285ed21d/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/02/b17626db-40f5-4c71-b3bf-e295285ed21d.jpeg" data-orig-size="2640,3489" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="b17626db-40f5-4c71-b3bf-e295285ed21d" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/02/b17626db-40f5-4c71-b3bf-e295285ed21d.jpeg?w=227" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/02/b17626db-40f5-4c71-b3bf-e295285ed21d.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2021/02/b17626db-40f5-4c71-b3bf-e295285ed21d.jpeg" alt="" class="wp-image-711" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="706" data-permalink="https://mythicaleve.com/ecf0b0a8-681e-4b02-be6e-3e5e3a830094/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/02/ecf0b0a8-681e-4b02-be6e-3e5e3a830094.jpeg" data-orig-size="2599,3288" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="ecf0b0a8-681e-4b02-be6e-3e5e3a830094" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/02/ecf0b0a8-681e-4b02-be6e-3e5e3a830094.jpeg?w=237" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/02/ecf0b0a8-681e-4b02-be6e-3e5e3a830094.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2021/02/ecf0b0a8-681e-4b02-be6e-3e5e3a830094.jpeg" alt="" class="wp-image-706" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="470" data-permalink="https://mythicaleve.com/f52a6429-ee82-4f82-9886-031177da2927/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/11/f52a6429-ee82-4f82-9886-031177da2927.jpeg" data-orig-size="2743,3658" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="f52a6429-ee82-4f82-9886-031177da2927" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/11/f52a6429-ee82-4f82-9886-031177da2927.jpeg?w=225" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/11/f52a6429-ee82-4f82-9886-031177da2927.jpeg?w=768" src="https://tanyaomelchuk.files.wordpress.com/2020/11/f52a6429-ee82-4f82-9886-031177da2927.jpeg" alt="" class="wp-image-470" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="378" data-permalink="https://mythicaleve.com/img_8606/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/08/img_8606.jpeg" data-orig-size="2394,3240" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="img_8606" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/08/img_8606.jpeg?w=222" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/08/img_8606.jpeg?w=757" src="https://tanyaomelchuk.files.wordpress.com/2020/08/img_8606.jpeg" alt="" class="wp-image-378" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="718" data-permalink="https://mythicaleve.com/f4860e4f-f223-42a2-9f0b-cf9433abc651/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg" data-orig-size="2416,3244" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="f4860e4f-f223-42a2-9f0b-cf9433abc651" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=223" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=763" src="https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=763" alt="" class="wp-image-718" srcset="https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=763 763w, https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=1526 1526w, https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=112 112w, https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=223 223w, https://tanyaomelchuk.files.wordpress.com/2021/02/f4860e4f-f223-42a2-9f0b-cf9433abc651.jpeg?w=768 768w" sizes="(max-width: 763px) 100vw, 763px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="174" data-permalink="https://mythicaleve.com/img_7744-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7744-1.jpeg" data-orig-size="2394,3252" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="img_7744-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7744-1.jpeg?w=221" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7744-1.jpeg?w=754" src="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7744-1.jpeg" alt="" class="wp-image-174" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="125" data-permalink="https://mythicaleve.com/img_7750-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7750-1.jpeg" data-orig-size="2448,3264" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="img_7750-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7750-1.jpeg?w=225" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7750-1.jpeg?w=768" src="https://tanyaomelchuk.files.wordpress.com/2020/05/img_7750-1.jpeg" alt="" class="wp-image-125" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1078" data-permalink="https://mythicaleve.com/portfolio/508d0980-fb4f-4347-a9f2-cd45c308cd2b/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/508d0980-fb4f-4347-a9f2-cd45c308cd2b.jpeg" data-orig-size="3264,2448" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 5s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1540170981&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;250&quot;,&quot;shutter_speed&quot;:&quot;0.041666666666667&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="508D0980-FB4F-4347-A9F2-CD45C308CD2B" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/508d0980-fb4f-4347-a9f2-cd45c308cd2b.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/508d0980-fb4f-4347-a9f2-cd45c308cd2b.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/04/508d0980-fb4f-4347-a9f2-cd45c308cd2b.jpeg" alt="" class="wp-image-1078" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1082" data-permalink="https://mythicaleve.com/portfolio/127770ac-f60d-4cd4-aaa1-206373963fd5/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/127770ac-f60d-4cd4-aaa1-206373963fd5.jpeg" data-orig-size="2448,3264" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 5s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1556636129&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;1000&quot;,&quot;shutter_speed&quot;:&quot;0.066666666666667&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="127770AC-F60D-4CD4-AAA1-206373963FD5" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/127770ac-f60d-4cd4-aaa1-206373963fd5.jpeg?w=225" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/127770ac-f60d-4cd4-aaa1-206373963fd5.jpeg?w=768" src="https://tanyaomelchuk.files.wordpress.com/2022/04/127770ac-f60d-4cd4-aaa1-206373963fd5.jpeg" alt="" class="wp-image-1082" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1085" data-permalink="https://mythicaleve.com/portfolio/ffc911d6-c2d4-42e3-ab7c-3d6ff01c5cb2/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/ffc911d6-c2d4-42e3-ab7c-3d6ff01c5cb2.jpeg" data-orig-size="2448,2544" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 5s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1572570515&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;320&quot;,&quot;shutter_speed&quot;:&quot;0.066666666666667&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="FFC911D6-C2D4-42E3-AB7C-3D6FF01C5CB2" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/ffc911d6-c2d4-42e3-ab7c-3d6ff01c5cb2.jpeg?w=289" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/ffc911d6-c2d4-42e3-ab7c-3d6ff01c5cb2.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/04/ffc911d6-c2d4-42e3-ab7c-3d6ff01c5cb2.jpeg" alt="" class="wp-image-1085" /></figure>
+</figure>
+
+
+
+<p></p>
+</div>
+</div>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<div class="wp-block-jetpack-layout-grid alignfull column1-desktop-grid__span-3 column1-desktop-grid__start-2 column1-desktop-grid__row-1 column2-desktop-grid__span-7 column2-desktop-grid__start-5 column2-desktop-grid__row-1 column1-tablet-grid__span-4 column1-tablet-grid__row-1 column2-tablet-grid__span-4 column2-tablet-grid__start-5 column2-tablet-grid__row-1 column1-mobile-grid__span-4 column1-mobile-grid__row-1 column2-mobile-grid__span-4 column2-mobile-grid__row-2">
+<div class="wp-block-jetpack-layout-grid-column wp-block-jetpack-layout-grid__padding-none">
+<h3 id="2017-2019"></h3>
+
+
+
+<p class="has-small-font-size">School years and plus</p>
+</div>
+
+
+
+<div class="wp-block-jetpack-layout-grid-column wp-block-jetpack-layout-grid__padding-none">
+<figure data-carousel-extra='{"blog_id":176465678,"permalink":"https:\/\/mythicaleve.com\/"}'  class="is-layout-flex wp-block-gallery-9 wp-block-gallery has-nested-images columns-default is-cropped">
+<figure class="wp-block-image size-large"><img data-attachment-id="187" data-permalink="https://mythicaleve.com/skyrock_low-1-4/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/skyrock_low-1-4.jpg" data-orig-size="503,372" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="skyrock_low-1-4" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/skyrock_low-1-4.jpg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/skyrock_low-1-4.jpg?w=503" src="https://tanyaomelchuk.files.wordpress.com/2020/05/skyrock_low-1-4.jpg?w=503" alt="" class="wp-image-187" srcset="https://tanyaomelchuk.files.wordpress.com/2020/05/skyrock_low-1-4.jpg 503w, https://tanyaomelchuk.files.wordpress.com/2020/05/skyrock_low-1-4.jpg?w=150 150w, https://tanyaomelchuk.files.wordpress.com/2020/05/skyrock_low-1-4.jpg?w=300 300w" sizes="(max-width: 503px) 100vw, 503px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="158" data-permalink="https://mythicaleve.com/aaliah_finished_size-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg" data-orig-size="7800,11333" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="aaliah_finished_size-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=206" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=705" src="https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=705" alt="" class="wp-image-158" srcset="https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=705 705w, https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=1410 1410w, https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=103 103w, https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=206 206w, https://tanyaomelchuk.files.wordpress.com/2020/05/aaliah_finished_size-1.jpg?w=768 768w" sizes="(max-width: 705px) 100vw, 705px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="866" data-permalink="https://mythicaleve.com/home/2811d246-0bb3-47d4-9d1c-ce82a77a2e89/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg" data-orig-size="1740,2287" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;1.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPad Pro (11-inch) (2nd generation)&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1602760632&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;3&quot;,&quot;iso&quot;:&quot;16&quot;,&quot;shutter_speed&quot;:&quot;0.0083333333333333&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;,&quot;latitude&quot;:&quot;45.493958333333&quot;,&quot;longitude&quot;:&quot;-73.623855555556&quot;}" data-image-title="Watercolour Man Portrait" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=228" data-large-file="https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=775" alt="" class="wp-image-866" srcset="https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=775 775w, https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=1550 1550w, https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=114 114w, https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=228 228w, https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=768 768w, https://tanyaomelchuk.files.wordpress.com/2021/07/2811d246-0bb3-47d4-9d1c-ce82a77a2e89.jpeg?w=779 779w" sizes="(max-width: 775px) 100vw, 775px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="163" data-permalink="https://mythicaleve.com/gb-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/gb-1.jpg" data-orig-size="2436,3264" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="gb-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/gb-1.jpg?w=224" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/gb-1.jpg?w=764" src="https://tanyaomelchuk.files.wordpress.com/2020/05/gb-1.jpg" alt="" class="wp-image-163" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="168" data-permalink="https://mythicaleve.com/not-a-virgin/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/not-a-virgin-.jpg" data-orig-size="1500,2100" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="not-a-virgin-" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/not-a-virgin-.jpg?w=214" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/not-a-virgin-.jpg?w=731" src="https://tanyaomelchuk.files.wordpress.com/2020/05/not-a-virgin-.jpg" alt="" class="wp-image-168" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="156" data-permalink="https://mythicaleve.com/shit-happened-5x7-1/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2020/05/shit-happened-5x7-1.jpg" data-orig-size="1500,2100" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="shit-happened-5&#215;7-1" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2020/05/shit-happened-5x7-1.jpg?w=214" data-large-file="https://tanyaomelchuk.files.wordpress.com/2020/05/shit-happened-5x7-1.jpg?w=731" src="https://tanyaomelchuk.files.wordpress.com/2020/05/shit-happened-5x7-1.jpg" alt="" class="wp-image-156" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1074" data-permalink="https://mythicaleve.com/portfolio/7484102e-b00a-4434-bee2-1542b0ba15b9/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/7484102e-b00a-4434-bee2-1542b0ba15b9.jpeg" data-orig-size="676,456" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="7484102E-B00A-4434-BEE2-1542B0BA15B9" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/7484102e-b00a-4434-bee2-1542b0ba15b9.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/7484102e-b00a-4434-bee2-1542b0ba15b9.jpeg?w=676" src="https://tanyaomelchuk.files.wordpress.com/2022/04/7484102e-b00a-4434-bee2-1542b0ba15b9.jpeg" alt="" class="wp-image-1074" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1075" data-permalink="https://mythicaleve.com/portfolio/df83e73f-2cd4-417c-99b4-eebd827f1a9a/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/df83e73f-2cd4-417c-99b4-eebd827f1a9a.jpeg" data-orig-size="2448,3264" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 5s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1540076833&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;500&quot;,&quot;shutter_speed&quot;:&quot;0.066666666666667&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="DF83E73F-2CD4-417C-99B4-EEBD827F1A9A" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/df83e73f-2cd4-417c-99b4-eebd827f1a9a.jpeg?w=225" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/df83e73f-2cd4-417c-99b4-eebd827f1a9a.jpeg?w=768" src="https://tanyaomelchuk.files.wordpress.com/2022/04/df83e73f-2cd4-417c-99b4-eebd827f1a9a.jpeg" alt="" class="wp-image-1075" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1076" data-permalink="https://mythicaleve.com/portfolio/4c2ddbc7-4dcd-4f2f-9eae-08c42267a4e5/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/4c2ddbc7-4dcd-4f2f-9eae-08c42267a4e5.jpeg" data-orig-size="3264,2448" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 5s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1540170949&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;320&quot;,&quot;shutter_speed&quot;:&quot;0.05&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="4C2DDBC7-4DCD-4F2F-9EAE-08C42267A4E5" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/4c2ddbc7-4dcd-4f2f-9eae-08c42267a4e5.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/4c2ddbc7-4dcd-4f2f-9eae-08c42267a4e5.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/04/4c2ddbc7-4dcd-4f2f-9eae-08c42267a4e5.jpeg" alt="" class="wp-image-1076" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1077" data-permalink="https://mythicaleve.com/portfolio/2b5ff167-9786-4b62-a290-f67f9c633221/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/2b5ff167-9786-4b62-a290-f67f9c633221.jpeg" data-orig-size="3264,2448" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 5s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1540171029&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;250&quot;,&quot;shutter_speed&quot;:&quot;0.033333333333333&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="2B5FF167-9786-4B62-A290-F67F9C633221" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/2b5ff167-9786-4b62-a290-f67f9c633221.jpeg?w=300" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/2b5ff167-9786-4b62-a290-f67f9c633221.jpeg?w=775" src="https://tanyaomelchuk.files.wordpress.com/2022/04/2b5ff167-9786-4b62-a290-f67f9c633221.jpeg" alt="" class="wp-image-1077" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1081" data-permalink="https://mythicaleve.com/portfolio/a4360ebf-99f5-4315-9c99-0aa70b18135b/" data-orig-file="https://tanyaomelchuk.files.wordpress.com/2022/04/a4360ebf-99f5-4315-9c99-0aa70b18135b.jpeg" data-orig-size="2388,3174" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 5s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1536239315&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;32&quot;,&quot;shutter_speed&quot;:&quot;0.00031595576619273&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="A4360EBF-99F5-4315-9C99-0AA70B18135B" data-image-description="" data-image-caption="" data-medium-file="https://tanyaomelchuk.files.wordpress.com/2022/04/a4360ebf-99f5-4315-9c99-0aa70b18135b.jpeg?w=226" data-large-file="https://tanyaomelchuk.files.wordpress.com/2022/04/a4360ebf-99f5-4315-9c99-0aa70b18135b.jpeg?w=770" src="https://tanyaomelchuk.files.wordpress.com/2022/04/a4360ebf-99f5-4315-9c99-0aa70b18135b.jpeg" alt="" class="wp-image-1081" /></figure>
+</figure>
+</div>
+</div>
+<div id="jp-post-flair" class="sharedaddy sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-967" class="share-twitter sd-button share-icon" href="https://mythicaleve.com/?share=twitter" target="_blank" title="Click to share on Twitter" ><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-967" class="share-facebook sd-button share-icon" href="https://mythicaleve.com/?share=facebook" target="_blank" title="Click to share on Facebook" ><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div></div>		</div><!-- .entry-content -->
+
+	</div><!-- .pique-panel-content -->
+
+	<footer class="entry-footer">
+			</footer><!-- .entry-footer -->
+
+</article><!-- #post-## -->
+
+	
+	</main><!-- #main -->
+</div><!-- #primary -->
+
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo" style="background-image: url('https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-289ff6a3-0e46-4d53-9ac9-2b7ac776b7bc.jpeg')">
+
+			<div id="tertiary" class="widget-area footer-widget-area" role="complementary">
+				    <div id="widget-area-2" class="widget-area">
+		        
+		<aside id="recent-posts-3" class="widget widget_recent_entries">
+		<h2 class="widget-title">Recent Posts</h2>
+		<ul>
+											<li>
+					<a href="2022/02/23/an-artist/index.html">An Artist</a>
+									</li>
+											<li>
+					<a href="2021/08/30/emma/index.html">Emma</a>
+									</li>
+											<li>
+					<a href="2021/04/23/jimi/index.html">Jimi</a>
+									</li>
+											<li>
+					<a href="2021/01/26/fred-astaire/index.html">Fred Astaire</a>
+									</li>
+											<li>
+					<a href="2020/12/23/twins/index.html">Twins</a>
+									</li>
+					</ul>
+
+		</aside>		    </div>
+		
+		
+			</div><!-- #tertiary -->
+
+		
+		<div class="site-info">
+			<a href="https://wordpress.com/?ref=footer_custom_com" rel="nofollow">Website Built with WordPress.com</a>.
+			
+			    </div><!-- .site-info -->
+
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<!--  -->
+<script type="text/javascript">
+	window._tkq = window._tkq || [];
+	if ( Math.random() < 0.01 ) {
+		window._tkq.push( [
+			'recordEvent',
+			'wpcom_wordads_noad',
+			{"theme":"pub\/pique","blog_id":176465678,"reason_noadverts_plugin":1,"reason_upgrade":1,"reason_blog_null":1}
+		] );
+	}
+</script><script src='https://0.gravatar.com/js/gprofiles.js?ver=202235z' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	</div>
+<script id='highlander-comments-js-extra'>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/tanyaomelchuk.wordpress.com\/public.api\/connect\/?action=request&domain=mythicaleve.com","logoutURL":"https:\/\/tanyaomelchuk.wordpress.com\/wp-login.php?action=logout&_wpnonce=76adfbadea","homeURL":"https:\/\/mythicaleve.com\/","postID":"967","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/textarea-autosize.min.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1661873472j'></script>
+	<div id="actionbar" style="display: none;"
+			class="actnbr-pub-pique actnbr-has-follow">
+		<ul>
+								<li class="actnbr-btn actnbr-hidden">
+								<a class="actnbr-action actnbr-actn-follow " href="">
+			<svg class="gridicon gridicons-reader-follow" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"/></g></svg><span>Follow</span>
+		</a>
+		<a class="actnbr-action actnbr-actn-following  no-display" href="">
+			<svg class="gridicon gridicons-reader-following" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"/></g></svg><span>Following</span>
+		</a>
+							<div class="actnbr-popover tip tip-top-left actnbr-notice" id="follow-bubble">
+							<div class="tip-arrow"></div>
+							<div class="tip-inner actnbr-follow-bubble">
+															<ul>
+											<li class="actnbr-sitename">
+			<a href="index.html">
+				<img alt='' src='https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-7908e9fe-55b9-492f-8fcd-80ba05e95bc8.png?w=50' class='avatar avatar-50' height='50' width='50' />				Tanya ST Omelchuk Art			</a>
+		</li>
+										<form method="post" action="https://subscribe.wordpress.com" accept-charset="utf-8" style="display: none;">
+																				<div>
+										<input type="email" name="email" placeholder="Enter your email address" class="actnbr-email-field" aria-label="Enter your email address" />
+										</div>
+										<input type="hidden" name="action" value="subscribe" />
+										<input type="hidden" name="blog_id" value="176465678" />
+										<input type="hidden" name="source" value="https://mythicaleve.com/" />
+										<input type="hidden" name="sub-type" value="actionbar-follow" />
+										<input type="hidden" id="_wpnonce" name="_wpnonce" value="b268986da5" />										<div class="actnbr-button-wrap">
+											<button type="submit" value="Sign me up">
+												Sign me up											</button>
+										</div>
+									</form>
+									<li class="actnbr-login-nudge">
+										<div>
+											Already have a WordPress.com account? <a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fmythicaleve.com%252F">Log in now.</a>										</div>
+									</li>
+								</ul>
+															</div>
+						</div>
+					</li>
+							<li class="actnbr-ellipsis actnbr-hidden">
+				<svg class="gridicon gridicons-ellipsis" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M7 12c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm12-2c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-7 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2z"/></g></svg>				<div class="actnbr-popover tip tip-top-left actnbr-more">
+					<div class="tip-arrow"></div>
+					<div class="tip-inner">
+						<ul>
+									<li class="actnbr-sitename">
+			<a href="index.html">
+				<img alt='' src='https://tanyaomelchuk.files.wordpress.com/2021/07/cropped-7908e9fe-55b9-492f-8fcd-80ba05e95bc8.png?w=50' class='avatar avatar-50' height='50' width='50' />				Tanya ST Omelchuk Art			</a>
+		</li>
+								<li class="actnbr-folded-customize">
+								<a href="https://tanyaomelchuk.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Ftanyaomelchuk.wordpress.com%2F">
+									<svg class="gridicon gridicons-customize" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z"/></g></svg>									<span>Customize</span>
+								</a>
+							</li>
+																<li class="actnbr-folded-follow">
+												<a class="actnbr-action actnbr-actn-follow " href="">
+			<svg class="gridicon gridicons-reader-follow" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"/></g></svg><span>Follow</span>
+		</a>
+		<a class="actnbr-action actnbr-actn-following  no-display" href="">
+			<svg class="gridicon gridicons-reader-following" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"/></g></svg><span>Following</span>
+		</a>
+										</li>
+																	<li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li>
+									<li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fmythicaleve.com%252F">Log in</a></li>
+																	<li class="actnbr-shortlink"><a href="https://wp.me/PbWqMC-fB">Copy shortlink</a></li>
+																	<li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li>
+																	<li class="actnbr-reader">
+										<a href="https://wordpress.com/read/blogs/176465678/posts/967">
+											View post in Reader										</a>
+									</li>
+																	<li class="actnbr-subs">
+										<a href="https://subscribe.wordpress.com/">Manage subscriptions</a>
+									</li>
+																		<li class="actnbr-fold"><a href="">Collapse this bar</a></li>
+															</ul>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20210915";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20220329";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+			<div id="jp-carousel-loading-overlay">
+			<div id="jp-carousel-loading-wrapper">
+				<span id="jp-carousel-library-loading">&nbsp;</span>
+			</div>
+		</div>
+		<div class="jp-carousel-overlay" style="display: none;">
+
+		<div class="jp-carousel-container">
+			<!-- The Carousel Swiper -->
+			<div
+				class="jp-carousel-wrap swiper-container jp-carousel-swiper-container jp-carousel-transitions"
+				itemscope
+				itemtype="https://schema.org/ImageGallery">
+				<div class="jp-carousel swiper-wrapper"></div>
+				<div class="jp-swiper-button-prev swiper-button-prev">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskPrev" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="9" height="12">
+							<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskPrev)">
+							<rect x="0.579102" width="23.8823" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+				<div class="jp-swiper-button-next swiper-button-next">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskNext" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="8" height="12">
+							<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskNext)">
+							<rect x="0.34375" width="23.8822" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<!-- The main close buton -->
+			<div class="jp-carousel-close-hint">
+				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<mask id="maskClose" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="14">
+						<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"/>
+					</mask>
+					<g mask="url(#maskClose)">
+						<rect x="0.409668" width="23.8823" height="24" fill="#FFFFFF"/>
+					</g>
+				</svg>
+			</div>
+			<!-- Image info, comments and meta -->
+			<div class="jp-carousel-info">
+				<div class="jp-carousel-info-footer">
+					<div class="jp-carousel-pagination-container">
+						<div class="jp-swiper-pagination swiper-pagination"></div>
+						<div class="jp-carousel-pagination"></div>
+					</div>
+					<div class="jp-carousel-photo-title-container">
+						<h2 class="jp-carousel-photo-caption"></h2>
+					</div>
+					<div class="jp-carousel-photo-icons-container">
+						<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-info" aria-label="Toggle photo metadata visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskInfo" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskInfo)">
+										<rect x="0.8125" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+							</span>
+						</a>
+												<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-comments" aria-label="Toggle photo comments visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskComments" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M4.3271 2H20.2486C21.3432 2 22.2388 2.9 22.2388 4V16C22.2388 17.1 21.3432 18 20.2486 18H6.31729L2.33691 22V4C2.33691 2.9 3.2325 2 4.3271 2ZM6.31729 16H20.2486V4H4.3271V18L6.31729 16Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskComments)">
+										<rect x="0.34668" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+
+								<span class="jp-carousel-has-comments-indicator" aria-label="This image has comments."></span>
+							</span>
+						</a>
+											</div>
+				</div>
+				<div class="jp-carousel-info-extra">
+					<div class="jp-carousel-info-content-wrapper">
+						<div class="jp-carousel-photo-title-container">
+							<h2 class="jp-carousel-photo-title"></h2>
+						</div>
+						<div class="jp-carousel-comments-wrapper">
+															<div id="jp-carousel-comments-loading">
+									<span>Loading Comments...</span>
+								</div>
+								<div class="jp-carousel-comments"></div>
+								<div id="jp-carousel-comment-form-container">
+									<span id="jp-carousel-comment-form-spinner">&nbsp;</span>
+									<div id="jp-carousel-comment-post-results"></div>
+																														<form id="jp-carousel-comment-form">
+												<label for="jp-carousel-comment-form-comment-field" class="screen-reader-text">Write a Comment...</label>
+												<textarea
+													name="comment"
+													class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea"
+													id="jp-carousel-comment-form-comment-field"
+													placeholder="Write a Comment..."
+												></textarea>
+												<div id="jp-carousel-comment-form-submit-and-info-wrapper">
+													<div id="jp-carousel-comment-form-commenting-as">
+																													<fieldset>
+																<label for="jp-carousel-comment-form-email-field">Email (Required)</label>
+																<input type="text" name="email" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-email-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-author-field">Name (Required)</label>
+																<input type="text" name="author" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-author-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-url-field">Website</label>
+																<input type="text" name="url" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-url-field" />
+															</fieldset>
+																											</div>
+													<input
+														type="submit"
+														name="submit"
+														class="jp-carousel-comment-form-button"
+														id="jp-carousel-comment-form-button-submit"
+														value="Post Comment" />
+												</div>
+											</form>
+																											</div>
+													</div>
+						<div class="jp-carousel-image-meta">
+							<div class="jp-carousel-title-and-caption">
+								<div class="jp-carousel-photo-info">
+									<h3 class="jp-carousel-caption" itemprop="caption description"></h3>
+								</div>
+
+								<div class="jp-carousel-photo-description"></div>
+							</div>
+							<ul class="jp-carousel-image-exif" style="display: none;"></ul>
+							<a class="jp-carousel-image-download" target="_blank" style="display: none;">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="19" height="18">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white"/>
+									</mask>
+									<g mask="url(#mask0)">
+										<rect x="0.870605" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+								<span class="jp-carousel-download-text"></span>
+							</a>
+							<div class="jp-carousel-image-map" style="display: none;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/mythicaleve.com\/":967};
+	</script>
+				<style>.wp-block-gallery.wp-block-gallery-5{ --wp--style--unstable-gallery-gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) ); gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )}</style>
+<style>.wp-block-gallery.wp-block-gallery-7{ --wp--style--unstable-gallery-gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) ); gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )}</style>
+<style>.wp-block-gallery.wp-block-gallery-9{ --wp--style--unstable-gallery-gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) ); gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )}</style>
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??-eJyljFEKgzAQBS9kXCw2kI/Ss+i6SGKyWbJZvL4t1BP0b97wGDjFYeVO3KGYk2x7ZIVEXRY8fhuk1c2wx8pQPpRJAZdWTSmDnlGoudV4yzSi6gB/N+/rLb7Zd3lN/unnRwh+She1E0V3?cssminify=yes' type='text/css' media='all' />
+<style id='core-block-supports-inline-css'>.wp-block-columns.wp-container-2,.wp-block-columns.wp-container-4{flex-wrap:nowrap;}
+</style>
+<script id='comment-like-js-extra'>
+var comment_like_text = {"loading":"Loading...","swipeUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/comment-likes\/js\/lib\/swipe.js?ver=20131008"};
+</script>
+<script id='coblocks-lightbox-js-extra'>
+var coblocksLigthboxData = {"closeLabel":"Close Gallery","leftLabel":"Previous","rightLabel":"Next"};
+</script>
+<script id='jetpack-carousel-js-extra'>
+var jetpackSwiperLibraryPath = {"url":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/jetpack-plugin\/production\/_inc\/build\/carousel\/swiper-bundle.min.js"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/mythicaleve.com\/wp-admin\/admin-ajax.php","nonce":"9371d0b431","display_exif":"1","display_comments":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/tanyaomelchuk.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fmythicaleve.com%2F","blog_id":"176465678","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"stats_query_args":"blog=176465678&v=wpcom&tz=-4&user_id=0&subd=tanyaomelchuk","is_public":"1"};
+</script>
+<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJyVkstSwzAMRX8IR4QpnW4YfoI949hKqsQPYdkt/XtcSqAPBiYrW/I98pVl2LMyMWQMGUYBizsyyO/NKHdwduSLYlcGCgImel9TytGEcmQuEtfgD9W5aCaBh6bdNK0S8uxQJdw1D2BJ8qnSSVRLDdvcxRsbeYu+XsqlA6a3gqBFMH+66LSZhhRLsKqnJeBYw3Ro9vrAkUKWxlNYgAe9o0FniksgmYhrk2FSfTRFFjreoraYlrcoJkXnXuLCDvtUNYr1gDNEwbhiL6efkN3ht8pnX0fbeq46ncBryZjqTuVUB3fzbc6gETNXyVcMnKIt5vje8Fp9QFfIWTC6jl7QfavnxD+OZpnac23kKvyD4yhZ9U5TAtnqRGGY1wo9+6d2vW5X7eP9ajN+AA2rRIY='></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="https://stats.wp.com/w.js?63" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'176465678','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'176465678','v':'wpcom','tz':'-4','user_id':'0','post':'967','subd':'tanyaomelchuk'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1mNzc2NTVTamdsd0xoLz9RQkM2K298TXY9bERQMXc2MjhEaVZfb2wwakRoSj0mUkp1THptM1NdbkV1WjZIcU9mVWQmPUIvMlN6Jk8wW3NYVEJ3dWZOWExuWD98SzV2RUU9M0s/S0F8OFtzUk5yZTh4P00xZ0VLVlE4VmF+ZFpbcWpFX0dkRGVIRFk9VU5qSmNXRWVFdU9YUTNHYmxGLFNqMWZdT2F+MGZkWWJBJjdTY1JfeU0lYT1DUG9oUkM0JjR2eTZFLzUud3N4TXJ4al0lQXRDNTMlP2xKdXx5L2dQU0RobDdiaWt3R2pXX2NvdnJMTG00Z3JVX0osYSxqaw=='}]);
+_stq.push([ 'clickTrackerInit', '176465678', '967' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>
+<!--
+	generated in 0.326 seconds
+	171262 bytes batcached for 300 seconds
+-->

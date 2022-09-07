@@ -1,0 +1,5 @@
+# Use a random number between 8000 and 8999
+DOCKERPORT=8957
+# Use a relatively unique name
+DOCKERNETWORK=mythicaleve
+DOCKERNAME=mythicaleve
